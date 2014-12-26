@@ -1,0 +1,15 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}ZacjaBundle:Authenticate:showSignIn{% endblock %}
+
+{% block body %}
+<h1>Welcome to the Authenticate:showSignIn page</h1>
+
+
+	{% if error %}
+		<div class="error">{{ error }}</div>
+	{% endif %}
+
+	{{ form(form) }}
+
+{% endblock %}

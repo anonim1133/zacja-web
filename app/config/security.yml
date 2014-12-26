@@ -1,0 +1,27 @@
+security:
+    providers:
+        database:
+            entity: { class: ZacjaBundle\Entity\User, property: username }
+
+    firewalls:
+            dev:
+                pattern:    ^/(_profiler|_wdt|css|js)
+                security:   false
+            login:
+                pattern:  ^(/signIn|/signUp)
+                provider:   database
+                security: true
+                anonymous: true
+            main:
+                pattern:    ^.+
+                provider:   database
+                security: true
+                anonymous: true
+                form_login:
+                    check_path: /
+                    login_path: /signIn
+                    default_target_path: /
+
+    access_control:
+        - { path: ^/admin, roles: ROLE_ADMIN }
+#        - { path: ^/, roles: ROLE_USER }

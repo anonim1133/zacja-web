@@ -1,0 +1,5 @@
+zacja:
+    resource: "@ZacjaBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
