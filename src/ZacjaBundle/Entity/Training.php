@@ -31,112 +31,112 @@ class Training
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date", type="datetime")
+     * @ORM\Column(name="date", type="datetime", nullable=true)
      */
     private $date;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="type", type="string", length=255)
+     * @ORM\Column(name="type", type="string", length=255, nullable=true)
      */
     private $type;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="time", type="integer")
+     * @ORM\Column(name="time", type="integer", nullable=true)
      */
     private $time;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="time_active", type="integer")
+     * @ORM\Column(name="time_active", type="integer", nullable=true)
      */
     private $timeActive;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="moves", type="integer")
+     * @ORM\Column(name="moves", type="integer", nullable=true)
      */
     private $moves;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="speed_max", type="float")
+     * @ORM\Column(name="speed_max", type="float", nullable=true)
      */
     private $speedMax;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="speed_avg", type="float")
+     * @ORM\Column(name="speed_avg", type="float", nullable=true)
      */
     private $speedAvg;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="tempo_min", type="float")
+     * @ORM\Column(name="tempo_min", type="float", nullable=true)
      */
     private $tempoMin;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="tempo_avg", type="float")
+     * @ORM\Column(name="tempo_avg", type="float", nullable=true)
      */
     private $tempoAvg;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="distance", type="float")
+     * @ORM\Column(name="distance", type="float", nullable=true)
      */
     private $distance;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="altitude_min", type="integer")
+     * @ORM\Column(name="altitude_min", type="integer", nullable=true)
      */
     private $altitudeMin;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="altitude_max", type="integer")
+     * @ORM\Column(name="altitude_max", type="integer", nullable=true)
      */
     private $altitudeMax;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="altitude_upward", type="integer")
+     * @ORM\Column(name="altitude_upward", type="integer", nullable=true)
      */
     private $altitudeUpward;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="altitude_downward", type="integer")
+     * @ORM\Column(name="altitude_downward", type="integer", nullable=true)
      */
     private $altitudeDownward;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="gpx", type="text")
+     * @ORM\Column(name="gpx", type="text", nullable=true)
      */
     private $gpx;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="user_id", type="integer")
+     * @ORM\Column(name="user_id", type="integer", nullable=true)
      */
     private $userId;
 
