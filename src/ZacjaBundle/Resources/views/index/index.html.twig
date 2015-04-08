@@ -3,9 +3,14 @@
 {% block title %}ZacjaBundle:index:index{% endblock %}
 
 {% block body %}
-<h1>Welcome!</h1>
+<h1>Welcome {% if username is defined %} {{ username }} {%  endif %}!</h1>
 
-	<a href="/signIn">Sign In</a>
-	</br>
-	<a href="/signUp">Sign Up</a>
+	{% if signedIn == false %}
+		<a href="{{ path('showSignIn') }}">Sign In</a>
+		</br>
+		<a href="{{ path('showSignUp') }}">Sign Up</a>
+	{% else %}
+	<a href="{{ path('zacja_account_signout') }}">Sign Out</a>
+	{% endif %}
+
 {% endblock %}

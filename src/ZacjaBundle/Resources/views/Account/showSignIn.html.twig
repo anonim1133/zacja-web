@@ -6,10 +6,12 @@
 <h1>Welcome to the Authenticate:showSignIn page</h1>
 
 
-	{% if error %}
+	{% if error is defined %}
 		<div class="error">{{ error }}</div>
 	{% endif %}
 
-	{{ form(form) }}
+	{% if form is defined %}
+		{{ form(form) }}
+	{% endif %}
 
 {% endblock %}

@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 use ZacjaBundle\Entity\User;
 use ZacjaBundle\Form\Model\Login;
 use ZacjaBundle\Form\Type\LoginType;
@@ -56,7 +57,7 @@ class AccountController extends Controller
                 if(isset($error)) $error = $error.message;
             }
         }else{
-            $error = 'Could find user with that username/password combination';
+            $error = 'Could not find user with that username/password combination';
         }
 
         if(isset($error)){
@@ -79,7 +80,7 @@ class AccountController extends Controller
     }
 
     /**
-     * @Route("/signIn")
+     * @Route("/signIn", name="showSignIn")
      * @Route("/login")
      * @Method("GET")
      * @Template("ZacjaBundle:Account:signIn.html.twig")
@@ -132,7 +133,7 @@ class AccountController extends Controller
     }
 
     /**
-     * @Route("/signUp")
+     * @Route("/signUp", name="showSignUp")
      * @Method("GET")
      * @Template("ZacjaBundle:Account:signUp.html.twig")
      */
@@ -152,11 +153,15 @@ class AccountController extends Controller
      * @Route("/signOut")
      * @Template("ZacjaBundle:Account:signOut.html.twig")
      */
-    public function signOutAction()
-    {
-        return array(
-                // ...
-            );    }
+    public function signOutAction(){
+	    $request = $this->getRequest();
+	    $session = $request->getSession();
+	    $token = new AnonymousToken("", "");
+	    $this->get('security.token_storage')->setToken($token);
+	    $session->set('_security_main',  serialize($token));
+
+        return $this->redirect($this->generateUrl('index'), 301);
+    }
 
     /**
      * @Route("/verifyEmail")
