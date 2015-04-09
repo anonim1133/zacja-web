@@ -13,4 +13,20 @@
 	<a href="{{ path('zacja_account_signout') }}">Sign Out</a>
 	{% endif %}
 
+	<div id="last_trainings_list">
+		<ul>
+			{% for training in trainings %}
+				<li><a href="?showTraining={{ training.id }}">{{ training.type }}</a> by <a href="showUser={{ training.user_id }}">{{ training.user_name }}</a> <p>{{ training.date }}</p> </li>
+			{% endfor %}
+		</ul>
+	</div>
+
+	<div id="last_conquers_list">
+		<ul>
+			{% for conquer in conquers %}
+	<li><a href="?showconquers={{ conquer.user_id }}"> {{ conquer.count }} conquers with {{ conquer.score }}points</a> by <a href="showUser={{ conquer.user_id }}">{{ conquer.user_name }}</a></li>
+{% endfor %}
+		</ul>
+	</div>
+
 {% endblock %}
