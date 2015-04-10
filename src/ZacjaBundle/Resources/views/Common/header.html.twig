@@ -1,4 +1,4 @@
-{% block header %}
+<header>
 
 	<h1>Welcome {% if username is defined %} {{ username }} {%  endif %}!</h1>
 
@@ -10,4 +10,4 @@
 	<a href="{{ path('zacja_account_signout') }}">Sign Out</a>
 {% endif %}
 
-{% endblock %}
+</header>
