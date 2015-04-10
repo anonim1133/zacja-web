@@ -1,0 +1,13 @@
+{% block header %}
+
+	<h1>Welcome {% if username is defined %} {{ username }} {%  endif %}!</h1>
+
+	{% if signedIn == false %}
+			<a href="{{ path('showSignIn') }}">Sign In</a>
+			</br>
+			<a href="{{ path('showSignUp') }}">Sign Up</a>
+		{% else %}
+	<a href="{{ path('zacja_account_signout') }}">Sign Out</a>
+{% endif %}
+
+{% endblock %}
