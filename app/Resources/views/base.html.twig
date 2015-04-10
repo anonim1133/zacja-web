@@ -3,11 +3,21 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+
+	    {% stylesheets '@ZacjaBundle/Resources/public/css/*' filter='cssrewrite' %}
+	    <link rel="stylesheet" href="{{ asset_url }}" />
+	    {% endstylesheets %}
+
+	    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+
+	    {% block javascripts %}
+		    {% javascripts '@ZacjaBundle/Resources/public/js/*' %}
+		        <script src="{{ asset_url }}"></script>
+		    {% endjavascripts %}
+	    {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
     </body>
 </html>
