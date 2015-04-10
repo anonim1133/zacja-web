@@ -4,4 +4,18 @@
 
 {% block body %}
 <h1>Welcome to the User:showUserConquers page</h1>
+
+	<div id="last_conquers_list">
+		<ul>
+			{% for conquer in conquers %}
+				<li>
+					<p>
+						{{ conquer.score }} points  by
+						<a href="/user/{{ conquer.user.username }}">{{ conquer.user.username }}</a>
+					</p>
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+
 {% endblock %}

@@ -19,8 +19,7 @@ use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 
-class AccountController extends Controller
-{
+class AccountController extends Controller{ //ToDo: Move database operations to entity repository
     /**
      * @Route("/signIn", name="signIn")
      * @Method("POST")

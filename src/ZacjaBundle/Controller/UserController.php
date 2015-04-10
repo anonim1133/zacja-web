@@ -22,11 +22,15 @@ class UserController extends Controller
      * @Route("/user/conquers/{user}")
      * @Template()
      */
-    public function showUserConquersAction()
-    {
-        return array(
-                // ...
-            );    }
+    public function showUserConquersAction($user){
+	    $conquers = $this->getDoctrine()->getRepository("ZacjaBundle:Conquer")->findByUserName($user);
+		dump($conquers);
+
+	    return $this->render(
+		    'ZacjaBundle:User:showUserConquers.html.twig',
+		    array('conquers' => $conquers)
+	    );
+    }
 
     /**
      * @Route("/user/{user}")

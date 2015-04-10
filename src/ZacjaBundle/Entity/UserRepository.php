@@ -31,6 +31,24 @@ class UserRepository extends EntityRepository implements UserProviderInterface
 		return $user;
 	}
 
+	public function loadUserById($id){
+		$q = $this
+			->createQueryBuilder('u')
+			->where('u.id = :id')
+			->setParameter('id', $id)
+			->getQuery();
+
+		try {
+			// The Query::getSingleResult() method throws an exception
+			// if there is no record matching the criteria.
+			$user = $q->getSingleResult();
+		} catch (NoResultException $e) {
+			throw new UsernameNotFoundException(sprintf('Unable to find an active user object identified by id: "%s".', $id), null, 0, $e);
+		}
+
+		return $user;
+	}
+
 	public function refreshUser(UserInterface $user)
 	{
 		$class = get_class($user);

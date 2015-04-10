@@ -29,7 +29,7 @@
 		<ul>
 			{% for conquer in conquers %}
 				<li>
-					<a href="/user/conquers/{{ conquer.user_id }}"> {{ conquer.count }} conquers with {{ conquer.score }}points </a> by
+					<a href="/user/conquers/{{ conquer.user_name }}"> {{ conquer.count }} conquers with {{ conquer.score }} points </a> by
 					<a href="/user/{{ conquer.user_name }}">{{ conquer.user_name }}</a></li>
 			{% endfor %}
 		</ul>

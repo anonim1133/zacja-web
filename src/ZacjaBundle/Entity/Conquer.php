@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Conquer
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="ZacjaBundle\Entity\ConquerRepository")
  */
 class Conquer
 {
@@ -89,6 +89,23 @@ class Conquer
     {
         return $this->userId;
     }
+
+	/**
+	 * @ORM\OneToOne(targetEntity="User")
+	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+	 **/
+	private $user;
+
+	/**
+	 * @return User
+	 */
+	public function getUser(){
+		return $this->user;
+	}
+
+	/**
+	 * @param mixed $user
+	 */
 
     /**
      * Set score
