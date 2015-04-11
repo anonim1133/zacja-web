@@ -39,4 +39,18 @@ class TrainingRepository extends EntityRepository {
 			return array();
 		}
 	}
+
+	public function findByUsernameType($username, $type){
+		$em = $this->getEntityManager();
+
+		$user = $em->getRepository("ZacjaBundle:User")->findOneByusername($username);
+
+
+		if(!is_null($user)){
+			$trainings = $em->getRepository("ZacjaBundle:Training")->findBy(array('userId' => $user->getId(), 'type' => $type));
+			return $trainings;
+		}else{
+			return array();
+		}
+	}
 }

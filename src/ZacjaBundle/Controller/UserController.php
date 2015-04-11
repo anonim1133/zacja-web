@@ -12,8 +12,7 @@ class UserController extends Controller
      * @Route("/user/trainings/{user}")
      * @Template()
      */
-    public function showUserTrainingsAction($user)
-    {
+    public function showUserTrainingsAction($user){
 	    $trainings = $this->getDoctrine()->getRepository("ZacjaBundle:Training")->findByUserName($user);
 	    //dump($trainings);
 
@@ -51,10 +50,14 @@ class UserController extends Controller
      * @Route("/user/trainings/{user}/{type}")
      * @Template()
      */
-    public function showUserTrainingsByTypeAction($user, $type)
-    {
-        return array(
-                // ...
-            );    }
+    public function showUserTrainingsByTypeAction($user, $type){
+	    $trainings = $this->getDoctrine()->getRepository("ZacjaBundle:Training")->findByUsernameType($user, $type);
+	    //dump($trainings);
+
+	    return $this->render(
+		    'ZacjaBundle:User:showUserTrainingsByType.html.twig',
+		    array('trainings' => $trainings)
+	    );
+    }
 
 }
