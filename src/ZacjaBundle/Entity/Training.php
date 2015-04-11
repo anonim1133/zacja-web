@@ -541,4 +541,17 @@ class Training
     {
         return $this->userId;
     }
+
+	/**
+	 * @ORM\OneToOne(targetEntity="User")
+	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+	 **/
+	private $user;
+
+	/**
+	 * @return User
+	 */
+	public function getUser(){
+		return $this->user;
+	}
 }

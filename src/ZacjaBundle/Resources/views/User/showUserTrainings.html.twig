@@ -3,5 +3,69 @@
 {% block title %}ZacjaBundle:User:showUserTrainings{% endblock %}
 
 {% block body %}
-<h1>Welcome to the User:showUserTrainings page</h1>
+	{{ render(controller('ZacjaBundle:Common:header')) }}
+
+	<div id="last_trainings_list">
+		<ul>
+			{% for training in trainings %}
+				<li>
+					<p class="training_type"><a href="/training/type/{{ training.type }}">{{ training.type }}</a></p>
+					<p class="training_date"><a href="/training/{{ training.id }}">{{ training.date|date("d F, Y H:i") }}</a></p>
+					<p class="training_distance">
+						<span class="label"> Distance </span>
+						{{ training.distance }}
+					</p>
+
+					{%  if training.moves > 0 %}
+					<p class="training_moves">
+						<span class="label"> Steps </span>
+						{{ training.moves }}
+					</p>
+					{% endif %}
+
+					<p class="training_time">
+						<span class="label"> Time </span>
+						{{ training.time }}
+					</p>
+					<p class="training_time_active">
+						<span class="label"> Time active </span>
+						{{ training.timeActive }}
+					</p>
+					<p class="training_speed_max">
+						<span class="label"> Speed Max </span>
+						{{ training.speedMax }}
+					</p>
+					<p class="training_speed_avg">
+						<span class="label"> Speed AVG </span>
+						{{ training.speedAvg }}
+					</p>
+					<p class="training_tempo_min">
+						<span class="label"> Tempo min </span>
+						{{ training.tempoMin }}
+					</p>
+					<p class="training_tempo_avg">
+						<span class="label"> Tempo AVG </span>
+						{{ training.tempoAvg }}
+					</p>
+					<p class="training_altitude_min">
+						<span class="label"> Latitude min</span>
+						{{ training.altitudeMin }}
+					</p>
+					<p class="training_altitude_max">
+						<span class="label"> Latitude max </span>
+						{{ training.altitudeMax }}
+					</p>
+					<p class="training_altitude_up">
+						<span class="label"> Altitude upwards </span>
+						{{ training.altitudeUpward }}
+					</p>
+					<p class="training_altitude_down">
+						<span class="label"> Altitude downwards </span>
+						{{ training.altitudeDownward }}
+					</p>
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+
 {% endblock %}

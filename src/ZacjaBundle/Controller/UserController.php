@@ -12,11 +12,16 @@ class UserController extends Controller
      * @Route("/user/trainings/{user}")
      * @Template()
      */
-    public function showUserTrainingsAction()
+    public function showUserTrainingsAction($user)
     {
-        return array(
-                // ...
-            );    }
+	    $trainings = $this->getDoctrine()->getRepository("ZacjaBundle:Training")->findByUserName($user);
+	    //dump($trainings);
+
+	    return $this->render(
+		    'ZacjaBundle:User:showUserTrainings.html.twig',
+		    array('trainings' => $trainings)
+	    );
+    }
 
     /**
      * @Route("/user/conquers/{user}")
@@ -24,7 +29,7 @@ class UserController extends Controller
      */
     public function showUserConquersAction($user){
 	    $conquers = $this->getDoctrine()->getRepository("ZacjaBundle:Conquer")->findByUserName($user);
-		dump($conquers);
+		//dump($conquers);
 
 	    return $this->render(
 		    'ZacjaBundle:User:showUserConquers.html.twig',
