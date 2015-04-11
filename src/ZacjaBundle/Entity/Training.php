@@ -240,7 +240,7 @@ class Training
      */
     public function getTime()
     {
-        return $this->time;
+        return gmdate("H:i:s", $this->time/1000);
     }
 
     /**
@@ -263,7 +263,7 @@ class Training
      */
     public function getTimeActive()
     {
-        return $this->timeActive;
+	    return gmdate("H:i:s", $this->timeActive);
     }
 
     /**
