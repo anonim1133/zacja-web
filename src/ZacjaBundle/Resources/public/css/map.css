@@ -1,3 +1,7 @@
 #map-canvas{
 	height: 256px;
 }
+
+#training-map-canvas{
+	height: 256px;
+}

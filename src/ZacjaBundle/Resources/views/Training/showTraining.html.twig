@@ -6,6 +6,8 @@
 	{{ render(controller('ZacjaBundle:Common:header')) }}
 
 	{# ToDo: Graphic corresponding to training type #}
+	<div id="training-map-canvas"></div>
+	<div id="trainingChartContainer" style="height: 300px; width: 100%;"></div>
 
 	<p class="training_user">
 		<a href="/user/{{ training.user.username }}">{{ training.user.username }}</a>
@@ -19,13 +21,13 @@
 	</p>
 	<p class="training_score">
 		<span class="label"> Score </span>
-		{{ training.score }}
+		{{ training.score|number_format(0, '.', ' ') }}
 	</p>
 
 	{%  if training.distance > 0 %}
 		<p class="training_distance">
 			<span class="label"> Distance </span>
-			{{ training.distance }}
+			{{ training.distance|number_format(2, '.', ' ') }}
 		</p>
 	{% endif %}
 
@@ -47,19 +49,19 @@
 	</p>
 	<p class="training_speed_max">
 		<span class="label"> Speed Max </span>
-		{{ training.speedMax }}
+		{{ training.speedMax|number_format(2, '.', ' ') }}
 	</p>
 	<p class="training_speed_avg">
 		<span class="label"> Speed AVG </span>
-		{{ training.speedAvg }}
+		{{ training.speedAvg|number_format(2, '.', ' ') }}
 	</p>
 	<p class="training_tempo_min">
 		<span class="label"> Tempo min </span>
-		{{ training.tempoMin }}
+		{{ training.tempoMin|number_format(2, '.', ' ') }}
 	</p>
 	<p class="training_tempo_avg">
 		<span class="label"> Tempo AVG </span>
-		{{ training.tempoAvg }}
+		{{ training.tempoAvg|number_format(2, '.', ' ') }}
 	</p>
 	<p class="training_altitude_min">
 		<span class="label"> Latitude min</span>
@@ -77,4 +79,6 @@
 		<span class="label"> Altitude downwards </span>
 		{{ training.altitudeDownward }}
 	</p>
+
+	<script> gpx = '{{ gpx|raw }}'; </script>
 {% endblock %}
