@@ -18,8 +18,10 @@ class TrainingRepository extends EntityRepository {
 			$trainings[$i]["user_id"] =  $training->getUserId();
 
 			$user = $em->getRepository('ZacjaBundle:User')->findOneBy(array('id' => $training->getUserId()));
-
-			$trainings[$i]["user_name"] = $user->getUsername();
+			if(!is_null($user))
+				$trainings[$i]["user_name"] = $user->getUsername();
+			else
+				$trainings[$i]["user_name"] = 'unknown';
 			$i++;
 		}
 

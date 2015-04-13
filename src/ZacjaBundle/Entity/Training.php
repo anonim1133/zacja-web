@@ -136,7 +136,7 @@ class Training
     /**
      * @var integer
      *
-     * @ORM\Column(name="user_id", type="integer", nullable=true)
+     * @ORM\Column(name="user_id", type="integer", nullable=false)
      */
     private $userId;
 
@@ -544,7 +544,7 @@ class Training
 
 	/**
 	 * @ORM\OneToOne(targetEntity="User")
-	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
 	 **/
 	private $user;
 
@@ -553,5 +553,18 @@ class Training
 	 */
 	public function getUser(){
 		return $this->user;
+	}
+
+	/**
+	 * Set user
+	 *
+	 * @param integer $userId
+	 * @return Training
+	 */
+	public function setUser($user)
+	{
+		$this->user = $user;
+
+		return $this;
 	}
 }
