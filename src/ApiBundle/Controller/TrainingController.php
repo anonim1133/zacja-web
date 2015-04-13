@@ -36,6 +36,7 @@ class TrainingController extends Controller
 			//'_id, id, score, gpx, training_type, time, time_active, moves, speed_max, speed_avg, tempo_min, tempo_avg,
 		    // distance, altitude_min, altitude_max, altitude_upward, altitude_downward, gpx_file, '
 		    $t->setUserId($user->getId());
+		    $t->setUser($em->getRepository('ZacjaBundle:User')->findOneById($user->getId()));
 		    $t->setScore($training['score']);
 		    $t->setDate($date);
 		    $t->setType($training['training_type']);
@@ -45,10 +46,14 @@ class TrainingController extends Controller
 		    if(isset($training['moves'])) $t->setMoves($training['moves']);
 		    else $t->setMoves(0);
 
-		    $t->setSpeedMax($training['speed_max']);
-		    $t->setSpeedAvg($training['speed_avg']);
-		    $t->setTempoMin($training['tempo_min']);
-		    $t->setTempoAvg($training['tempo_avg']);
+		    if(isset($training['speed_max']))
+		        $t->setSpeedMax($training['speed_max']);
+		    if(isset($training['speed_avg']))
+		        $t->setSpeedAvg($training['speed_avg']);
+		    if(isset($training['tempo_min']))
+		        $t->setTempoMin($training['tempo_min']);
+		    if(isset($training['tempo_avg']))
+		        $t->setTempoAvg($training['tempo_avg']);
 		    $t->setDistance($training['distance']);
 		    $t->setAltitudeMin($training['altitude_min']);
 		    $t->setAltitudeMax($training['altitude_max']);
