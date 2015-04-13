@@ -32,6 +32,7 @@ class ConquerController extends Controller
 			$new_conquer =  new Conquer();
 
 		    $new_conquer->setUserId($user->getId());
+		    $new_conquer->setUser($em->getRepository('ZacjaBundle:User')->findOneById($user->getId()));
 		    $new_conquer->setDate($date);
 		    $new_conquer->setScore($conquer['score']);
 		    $new_conquer->setLongitude($conquer['lon']);

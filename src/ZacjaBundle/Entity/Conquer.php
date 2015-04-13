@@ -104,8 +104,17 @@ class Conquer
 	}
 
 	/**
-	 * @param mixed $user
+	 * Set user
+	 *
+	 * @param integer $userId
+	 * @return Training
 	 */
+	public function setUser($user)
+	{
+		$this->user = $user;
+
+		return $this;
+	}
 
     /**
      * Set score
