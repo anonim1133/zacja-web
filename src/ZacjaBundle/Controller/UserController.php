@@ -5,6 +5,8 @@ namespace ZacjaBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpKernel\Profiler\Profile;
 
 class UserController extends Controller
 {
@@ -40,11 +42,83 @@ class UserController extends Controller
      * @Route("/user/{user}")
      * @Template()
      */
-    public function showProfileAction()
-    {
-        return array(
-                // ...
-            );    }
+    public function showProfileAction($user){
+
+	    $canEdit = false;
+
+	    if ($this->get('security.context')->isGranted('ROLE_USER')){//signed in
+		    $username = $this->get('security.token_storage')->getToken()->getUser();
+
+		    if($username == $user){//signed as user which profile is shown
+			    $canEdit = true;
+		    }
+	    }
+
+	    $user = $this->getDoctrine()->getRepository("ZacjaBundle:User")->findOneByUsername($user);
+
+		  return $this->render(
+		    'ZacjaBundle:User:showProfile.html.twig', array(
+			  'user' => $user,
+			  'canEdit' => $canEdit
+		  ));
+    }
+
+	/**
+	 * @Route("/user/editprofile/"))
+	 * @Method("GET")
+	 */
+	public function editProfileAction(){
+		$username = $this->get('security.token_storage')->getToken()->getUser();
+		$profile = $this->getDoctrine()->getRepository("ZacjaBundle:User")->findOneBy(array("username" => $username))->getProfile();
+
+		$form = $this->createFormBuilder($profile)
+			->add('name')
+			->add('pseudonym')
+			->add('surname')
+			->add('avatar')
+			->add('about')
+			->add('save', 'submit', array('label' => 'Edit profile'))
+			->getForm();
+
+		return $this->render('@Zacja/User/editProfile.html.twig', array(
+			'form' => $form->createView(),
+		));
+		return $this->render(
+			'ZacjaBundle:User:editProfile.html.twig', array());
+	}
+
+	/**
+	 * @Route("/user/editprofile/"))
+	 * @Method("POST")
+	 */
+	public function saveProfileAction(){
+		$request = $this->getRequest();
+
+		$username = $this->get('security.token_storage')->getToken()->getUser();
+		$profile = $this->getDoctrine()->getRepository("ZacjaBundle:User")->findOneBy(array("username" => $username))->getProfile();
+
+		$form = $this->createFormBuilder($profile)
+			->add('name')
+			->add('pseudonym')
+			->add('surname')
+			->add('avatar')
+			->add('about')
+			->add('save', 'submit', array('label' => 'Edit profile'))
+			->getForm();
+
+		$form->handleRequest($request);
+
+		if ($form->isValid()){
+			$em = $this->getDoctrine()->getManager();
+
+			$em->persist($profile);
+			$em->flush();
+
+			return $this->redirectToRoute('index');
+		}else{
+			return $this->redirectToRoute('zacja_user_editprofile');
+		}
+	}
 
     /**
      * @Route("/user/trainings/{user}/{type}")

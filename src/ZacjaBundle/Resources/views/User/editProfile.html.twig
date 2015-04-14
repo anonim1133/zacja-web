@@ -5,7 +5,7 @@
 {% block body %}
 	{{ render(controller('ZacjaBundle:Common:header')) }}
 
-	{% if canEdit %}
-		<a href="{{ path('zacja_user_editprofile') }}">edit profile</a>
-	{% endif %}
+	{{ form_start(form) }}
+	{{ form_widget(form) }}
+	{{ form_end(form) }}
 {% endblock %}
