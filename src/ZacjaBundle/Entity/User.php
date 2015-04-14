@@ -289,4 +289,30 @@ class User implements  UserInterface, \Serializable{
             // $this->salt
             ) = unserialize($serialized);
     }
+
+	/**
+	 * @ORM\OneToOne(targetEntity="Profile", cascade={"persist"})
+	 * @ORM\JoinColumn(name="profile_id", referencedColumnName="id")
+	 **/
+	private $profile;
+
+	/**
+	 * @return User
+	 */
+	public function getProfile(){
+		return $this->profile;
+	}
+
+	/**
+	 * Set profile
+	 *
+	 * @param integer $profileId
+	 * @return User
+	 */
+	public function setProfile($profile)
+	{
+		$this->profile = $profile;
+
+		return $this;
+	}
 }

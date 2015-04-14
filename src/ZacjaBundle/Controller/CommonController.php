@@ -17,7 +17,7 @@ class CommonController extends Controller{
 	    if ($this->get('security.context')->isGranted('ROLE_USER')){
 		    $user = $this->get('security.token_storage')->getToken()->getUser();
 
-		    $username = $user->getUserName();
+		    $username = $user;
 		    $signedin = true;
 	    }else{
 		    $username = 'stranger';

@@ -15,32 +15,16 @@ class indexController extends Controller
     public function indexAction(){
 	    $em = $this->getDoctrine()->getManager();
 
+	    dump($em->getRepository('ZacjaBundle:User')->find(3));
+
 	    $trainings = $em->getRepository('ZacjaBundle:Training')->getLast();
 	    $conquers = $em->getRepository('ZacjaBundle:Conquer')->getLast();
 
-	    if ($this->get('security.context')->isGranted('ROLE_USER')) {// Logged in with user class
-		    $user = $this->get('security.token_storage')->getToken()->getUser();
-
-		    return $this->render(
-			    'ZacjaBundle:index:index.html.twig',
-			    array('username' => $user,
-				    'signedIn' => true,
-				    'trainings' => $trainings,
+		    return $this->render('ZacjaBundle:index:index.html.twig',
+			    array('trainings' => $trainings,
 				    'conquers' => $conquers
 			    )
 		    );
-	    }else{//not logged in, or logged with other class than user
-		    return $this->render(
-
-
-			    'ZacjaBundle:index:index.html.twig',
-			    array('username' => 'stranger',
-				    'signedIn' => false,
-				    'trainings' => $trainings,
-				    'conquers' => $conquers
-			    )
-		    );
-	    }
     }
 }
 

@@ -14,7 +14,7 @@ use ZacjaBundle\Form\Model\Login;
 use ZacjaBundle\Form\Type\LoginType;
 use ZacjaBundle\Form\Type\RegistrationType;
 use ZacjaBundle\Form\Model\Registration;
-use Symfony\Component\Validator\Constraints\DateTime;
+use ZacjaBundle\Entity\Profile;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
@@ -118,6 +118,7 @@ class AccountController extends Controller{ //ToDo: Move database operations to 
             $registration->getUser()->setIsActive(false);
             $registration->getUser()->setRoles(0);
             $registration->getUser()->setRegistrationDate(new \DateTime('now'));
+	        $registration->getUser()->setProfile(new Profile());
 
             $em->persist($registration->getUser());
             $em->flush();
