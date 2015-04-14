@@ -21,7 +21,14 @@ class Training
      */
     private $id;
 
-    /**
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="user_id", type="integer", nullable=false)
+	 */
+	private $userId;
+
+	/**
      * @var integer
      *
      * @ORM\Column(name="score", type="integer")
@@ -132,14 +139,6 @@ class Training
      * @ORM\Column(name="gpx", type="text", nullable=true)
      */
     private $gpx;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="user_id", type="integer", nullable=false)
-     */
-    private $userId;
-
 
     /**
      * Get id
@@ -543,7 +542,7 @@ class Training
     }
 
 	/**
-	 * @ORM\OneToOne(targetEntity="User")
+	 * @ORM\ManyToOne(targetEntity="User")
 	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
 	 **/
 	private $user;
@@ -561,8 +560,7 @@ class Training
 	 * @param integer $userId
 	 * @return Training
 	 */
-	public function setUser($user)
-	{
+	public function setUser($user){
 		$this->user = $user;
 
 		return $this;

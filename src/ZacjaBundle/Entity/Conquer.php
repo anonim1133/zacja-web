@@ -91,7 +91,7 @@ class Conquer
     }
 
 	/**
-	 * @ORM\OneToOne(targetEntity="User")
+	 * @ORM\ManyToOne(targetEntity="User")
 	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
 	 **/
 	private $user;
@@ -109,8 +109,7 @@ class Conquer
 	 * @param integer $userId
 	 * @return Training
 	 */
-	public function setUser($user)
-	{
+	public function setUser($user){
 		$this->user = $user;
 
 		return $this;
