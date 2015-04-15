@@ -41,7 +41,7 @@ class ConquerRepository extends EntityRepository {
 
 
 		if(!is_null($user)){
-			$conquers = $em->getRepository("ZacjaBundle:Conquer")->findByuser_id($user->getId());
+			$conquers = $em->getRepository("ZacjaBundle:Conquer")->findBy(array('userId' => $user->getId()), null, $limit);
 			/*
 			$qb = $em->createQueryBuilder();
 			$qb->select('c')

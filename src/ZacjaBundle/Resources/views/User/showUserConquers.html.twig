@@ -7,19 +7,6 @@
 
 	<div id="map-canvas"></div>
 
-	<div id="last_conquers_list">
-		<ul>
-			{% for conquer in conquers %}
-				<li>
-					<p>
-						<a href="#{{ conquer.latitude }},{{ conquer.longitude }}"
-						    onclick="mapAddPoint({{ conquer.latitude }}, {{ conquer.longitude }}, '{{ conquer.user.username }} - {{ conquer.score }}')">
-							{{ conquer.score }} points</a>  by
-						<a href="/user/{{ conquer.user.username }}">{{ conquer.user.username }}</a>
-					</p>
-				</li>
-			{% endfor %}
-		</ul>
-	</div>
+	{{ render(controller('ZacjaBundle:User:getUserConquers', {'user': user})) }}
 
 {% endblock %}

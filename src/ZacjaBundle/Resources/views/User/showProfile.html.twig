@@ -5,7 +5,17 @@
 {% block body %}
 	{{ render(controller('ZacjaBundle:Common:header')) }}
 
+	<img class="avatar" src="{{ user.profile.avatar }}"/>
+	<p class="level">Level {{ user.profile.level }} with {{ user.profile.score }} points</p>
+	<p class="name">{{ user.profile.name }} ( {{ user.profile.pseudonym }} ) {{ user.profile.surname }}</p>
+	<p class="about">{{ user.profile.about }}</p>
+
 	{% if canEdit %}
 		<a href="{{ path('zacja_user_editprofile') }}">edit profile</a>
 	{% endif %}
+
+	{{ render(controller('ZacjaBundle:User:getUserTrainings', { 'user': 'anonim1133', 'limit': 4})) }}
+
+	{{ render(controller('ZacjaBundle:User:getUserConquers', { 'user': 'anonim1133', 'limit': 4})) }}
+
 {% endblock %}

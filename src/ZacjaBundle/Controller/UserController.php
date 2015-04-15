@@ -8,59 +8,73 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpKernel\Profiler\Profile;
 
-class UserController extends Controller
-{
+class UserController extends Controller{
+
+	/**
+	 * @Route("/user/{user}")
+	 * @Template()
+	 */
+	public function showProfileAction($user){
+
+		$canEdit = false;
+
+		if ($this->get('security.context')->isGranted('ROLE_USER')){//signed in
+			$username = $this->get('security.token_storage')->getToken()->getUser();
+
+			if($username == $user){//signed as user which profile is shown
+				$canEdit = true;
+			}
+		}
+
+		$user = $this->getDoctrine()->getRepository("ZacjaBundle:User")->findOneByUsername($user);
+
+		return $this->render(
+			'ZacjaBundle:User:showProfile.html.twig', array(
+			'user' => $user,
+			'canEdit' => $canEdit
+		));
+	}
+
     /**
      * @Route("/user/trainings/{user}")
      * @Template()
      */
     public function showUserTrainingsAction($user){
-	    $trainings = $this->getDoctrine()->getRepository("ZacjaBundle:Training")->findByUserName($user);
-
 	    return $this->render(
 		    'ZacjaBundle:User:showUserTrainings.html.twig',
-		    array('trainings' => $trainings)
+		    array('user' => $user)
 	    );
     }
+
+	public function getUserTrainingsAction($user, $limit = null){
+		$trainings = $this->getDoctrine()->getRepository("ZacjaBundle:Training")->findByUserName($user, $limit);
+
+		return $this->render(
+			'ZacjaBundle:User:getUserTrainings.html.twig',
+			array('trainings' => $trainings)
+		);
+
+	}
 
     /**
      * @Route("/user/conquers/{user}")
      * @Template()
      */
     public function showUserConquersAction($user){
-	    $conquers = $this->getDoctrine()->getRepository("ZacjaBundle:Conquer")->findByUserName($user);
-		//dump($conquers);
-
 	    return $this->render(
 		    'ZacjaBundle:User:showUserConquers.html.twig',
-		    array('conquers' => $conquers)
+		    array('user' => $user)
 	    );
     }
 
-    /**
-     * @Route("/user/{user}")
-     * @Template()
-     */
-    public function showProfileAction($user){
+	public function getUserConquersAction($user, $limit = null){
+		$conquers = $this->getDoctrine()->getRepository("ZacjaBundle:Conquer")->findByUserName($user, $limit);
 
-	    $canEdit = false;
-
-	    if ($this->get('security.context')->isGranted('ROLE_USER')){//signed in
-		    $username = $this->get('security.token_storage')->getToken()->getUser();
-
-		    if($username == $user){//signed as user which profile is shown
-			    $canEdit = true;
-		    }
-	    }
-
-	    $user = $this->getDoctrine()->getRepository("ZacjaBundle:User")->findOneByUsername($user);
-
-		  return $this->render(
-		    'ZacjaBundle:User:showProfile.html.twig', array(
-			  'user' => $user,
-			  'canEdit' => $canEdit
-		  ));
-    }
+		return $this->render(
+			'ZacjaBundle:User:getUserConquers.html.twig',
+			array('conquers' => $conquers)
+		);
+	}
 
 	/**
 	 * @Route("/user/editprofile/"))

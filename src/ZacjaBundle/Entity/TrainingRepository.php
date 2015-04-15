@@ -35,7 +35,7 @@ class TrainingRepository extends EntityRepository {
 
 
 		if(!is_null($user)){
-			$trainings = $em->getRepository("ZacjaBundle:Training")->findByuser_id($user->getId());
+			$trainings = $em->getRepository("ZacjaBundle:Training")->findBy(array('userId' => $user->getId()), null, $limit);
 			return $trainings;
 		}else{
 			return array();
