@@ -68,23 +68,27 @@ class UserController extends Controller
 	 * @Method("GET")
 	 */
 	public function editProfileAction(){
-		$username = $this->get('security.token_storage')->getToken()->getUser();
-		$profile = $this->getDoctrine()->getRepository("ZacjaBundle:User")->findOneBy(array("username" => $username))->getProfile();
+		if ($this->get('security.context')->isGranted('ROLE_USER')){//signed in
+			$username = $this->get('security.token_storage')->getToken()->getUser();
+			$profile = $this->getDoctrine()->getRepository("ZacjaBundle:User")->findOneBy(array("username" => $username))->getProfile();
 
-		$form = $this->createFormBuilder($profile)
-			->add('name')
-			->add('pseudonym')
-			->add('surname')
-			->add('avatar')
-			->add('about')
-			->add('save', 'submit', array('label' => 'Edit profile'))
-			->getForm();
+			$form = $this->createFormBuilder($profile)
+				->add('name')
+				->add('pseudonym')
+				->add('surname')
+				->add('avatar')
+				->add('about')
+				->add('save', 'submit', array('label' => 'Edit profile'))
+				->getForm();
 
-		return $this->render('@Zacja/User/editProfile.html.twig', array(
-			'form' => $form->createView(),
-		));
-		return $this->render(
-			'ZacjaBundle:User:editProfile.html.twig', array());
+			return $this->render('@Zacja/User/editProfile.html.twig', array(
+				'form' => $form->createView(),
+			));
+			return $this->render(
+				'ZacjaBundle:User:editProfile.html.twig', array());
+		}else{
+			return $this->redirectToRoute('index');
+		}
 	}
 
 	/**

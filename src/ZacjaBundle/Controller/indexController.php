@@ -15,8 +15,6 @@ class indexController extends Controller
     public function indexAction(){
 	    $em = $this->getDoctrine()->getManager();
 
-	    dump($em->getRepository('ZacjaBundle:User')->find(3));
-
 	    $trainings = $em->getRepository('ZacjaBundle:Training')->getLast();
 	    $conquers = $em->getRepository('ZacjaBundle:Conquer')->getLast();
 
