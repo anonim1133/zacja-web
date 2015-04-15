@@ -2,6 +2,10 @@
 
 	<h1>Welcome {% if username is defined %} {{ username }} {%  endif %}!</h1>
 
+	{% if user is not null %}
+		<p class="level">Level {{ user.profile.level }} with {{ user.profile.score }} points</p>
+	{% endif %}
+
 	{% if signedIn == false %}
 			<a href="{{ path('showSignIn') }}">Sign In</a>
 			</br>

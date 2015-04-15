@@ -14,10 +14,12 @@ class CommonController extends Controller{
      */
     public function headerAction(){
 
+	    $user = null;
 	    if ($this->get('security.context')->isGranted('ROLE_USER')){
-		    $user = $this->get('security.token_storage')->getToken()->getUser();
+		    $username = $this->get('security.token_storage')->getToken()->getUser();
 
-		    $username = $user;
+		    $user = $this->getDoctrine()->getRepository("ZacjaBundle:User")->findOneByUsername($username);
+		    dump($user);
 		    $signedin = true;
 	    }else{
 		    $username = 'stranger';
@@ -28,6 +30,7 @@ class CommonController extends Controller{
 	    return $this->render(
 		    'ZacjaBundle:Common:header.html.twig',
 		    array(
+			    'user' => $user,
 			    'username' => $username,
 			    'signedIn' => $signedin
 		    )
