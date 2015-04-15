@@ -48,4 +48,19 @@ class TrainingController extends Controller
 	    }
     }
 
+
+	/**
+	 * @Route("training/type/{type}", name="training_type")
+	 * @Template()
+	 */
+	public function showTrainingByTypeAction($type){
+		$trainings = $this->getDoctrine()->getRepository("ZacjaBundle:Training")->findByType($type);
+
+		dump($trainings);
+
+		return $this->render(
+			'ZacjaBundle:Training:showTrainingsByType.html.twig',
+			array('trainings' => $trainings)
+		);
+	}
 }

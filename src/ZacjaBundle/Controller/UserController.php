@@ -16,7 +16,6 @@ class UserController extends Controller
      */
     public function showUserTrainingsAction($user){
 	    $trainings = $this->getDoctrine()->getRepository("ZacjaBundle:Training")->findByUserName($user);
-	    //dump($trainings);
 
 	    return $this->render(
 		    'ZacjaBundle:User:showUserTrainings.html.twig',

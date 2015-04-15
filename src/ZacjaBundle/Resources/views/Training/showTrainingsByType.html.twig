@@ -1,0 +1,48 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}ZacjaBundle:User:showUserTrainings{% endblock %}
+
+{% block body %}
+	{{ render(controller('ZacjaBundle:Common:header')) }}
+
+	{# ToDo: Graphic corresponding to training type #}
+
+	<div id="last_trainings_list">
+		<ul>
+			{% for training in trainings %}
+				<li>
+					<p class="training_type">
+						<a href="/user/trainings/{{ training.user.username }}/{{ training.type }}">{{ training.type }}</a>
+					</p>
+					<p class="training_date">
+						<a href="/training/{{ training.id }}">{{ training.date|date("d F, Y H:i") }}</a>
+					</p>
+					<p class="training_score">
+						<span class="label"> Score </span>
+						{{ training.score }}
+					</p>
+
+					{%  if training.distance > 0 %}
+						<p class="training_distance">
+							<span class="label"> Distance </span>
+							{{ training.distance }}
+						</p>
+					{% endif %}
+
+					{%  if training.moves > 0 %}
+						<p class="training_moves">
+							<span class="label"> Steps </span>
+							{{ training.moves }}
+						</p>
+					{% endif %}
+
+					<p class="training_time">
+						<span class="label"> Time </span>
+						{{ training.time }}
+					</p>
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+
+{% endblock %}
