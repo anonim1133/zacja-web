@@ -14,8 +14,8 @@
 		<a href="{{ path('zacja_user_editprofile') }}">edit profile</a>
 	{% endif %}
 
-	{{ render(controller('ZacjaBundle:User:getUserTrainings', { 'user': 'anonim1133', 'limit': 4})) }}
+	{{ render(controller('ZacjaBundle:User:getUserTrainings', { 'user': user.username, 'limit': 4})) }}
 
-	{{ render(controller('ZacjaBundle:User:getUserConquers', { 'user': 'anonim1133', 'limit': 4})) }}
+	{{ render(controller('ZacjaBundle:User:getUserConquers', { 'user': user.username, 'limit': 4})) }}
 
 {% endblock %}

@@ -28,6 +28,18 @@ class UserController extends Controller{
 
 		$user = $this->getDoctrine()->getRepository("ZacjaBundle:User")->findOneByUsername($user);
 
+		/*
+		$profile = $user->getProfile();
+		$badge = $this->getDoctrine()->getRepository("ZacjaBundle:Badge")->findOneById(1);
+
+		$profile->getBadges()->add($badge);
+		$badge->getCaptors()->add($profile);
+
+		dump($user->getProfile()->getBadges());
+
+
+		$this->getDoctrine()->getEntityManager()->flush();
+		*/
 		return $this->render(
 			'ZacjaBundle:User:showProfile.html.twig', array(
 			'user' => $user,
@@ -40,6 +52,7 @@ class UserController extends Controller{
      * @Template()
      */
     public function showUserTrainingsAction($user){
+
 	    return $this->render(
 		    'ZacjaBundle:User:showUserTrainings.html.twig',
 		    array('user' => $user)
@@ -47,6 +60,7 @@ class UserController extends Controller{
     }
 
 	public function getUserTrainingsAction($user, $limit = null){
+		dump($user);
 		$trainings = $this->getDoctrine()->getRepository("ZacjaBundle:Training")->findByUserName($user, $limit);
 
 		return $this->render(
