@@ -33,12 +33,14 @@ google.maps.event.addDomListener(window, 'load', mapInitialize);
 
 function mapTrainingInitialize() {
 	if($('#training-map-canvas').length > 0){
+
+
 		gpx = $.parseJSON(gpx);
 
-		var myLatlng = new google.maps.LatLng(gpx[0]['lat'],gpx[0]['lon']);
+		var myLatLng = new google.maps.LatLng(gpx[0]['lat'],gpx[0]['lon']);
 		var mapOptions = {
 			zoom: 16,
-			center: myLatlng
+			center: myLatLng
 		}
 		map = new google.maps.Map(document.getElementById('training-map-canvas'), mapOptions);
 
@@ -66,8 +68,32 @@ function mapTrainingInitialize() {
 		}
 
 		map.fitBounds(bounds);
+
+
+		var icon = {
+			path: 'M 299.8,61.6 177.9,168.4 168.9,246.2 105.2,346 168.8,398.4 414.8,345 345.7,251.2 245.1,191.6 Z',
+			fillColor: '#33CCFF',
+			fillOpacity: 0.8,
+			scale: 0.1,
+			strokeColor: '#33CCFF',
+			anchor: new google.maps.Point(256,256),
+			strokeWeight: 2
+		};
+
+		marker = new google.maps.Marker({
+			position: myLatLng,
+			map: map,
+			icon: icon
+		});
 	}
 }
+
+function moveMarker( position ) {
+	marker.setPosition( new google.maps.LatLng( gpx[position]['lat'], gpx[position]['lon'] ) );
+
+};
+
+
 
 
 google.maps.event.addDomListener(window, 'load', mapTrainingInitialize);

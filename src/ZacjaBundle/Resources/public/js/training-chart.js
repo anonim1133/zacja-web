@@ -27,7 +27,10 @@ window.onload = function () {
 					showInLegend: true,
 					name: "Speed",
 					markerSize: 0,
-					dataPoints: speed
+					dataPoints: speed,
+					mousemove: function(e){
+						moveMarker(e.dataPointIndex);
+					}
 				},
 				{
 					type: "spline",
