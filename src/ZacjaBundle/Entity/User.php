@@ -10,12 +10,15 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * User
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="ZacjaBundle\Entity\UserRepository")
  * @UniqueEntity(fields="username", message="Username is already taken")
  * @UniqueEntity(fields="email", message="Email is already in use")
  *
  */
 class User implements  UserInterface, \Serializable{
+	public function __construct(){
+		$this->friends = new ArrayCollection();
+	}
     /**
      * @var integer
      *
@@ -312,6 +315,32 @@ class User implements  UserInterface, \Serializable{
 	public function setProfile($profile)
 	{
 		$this->profile = $profile;
+
+		return $this;
+	}
+
+	/**
+	 * @ORM\ManyToMany(targetEntity="User")
+	 * @ORM\JoinTable(name="friends")
+	 **/
+	private $friends;
+
+	/**
+	 * @return Friends
+	 */
+	public function getFriends(){
+		return $this->friends;
+	}
+
+	/**
+	 * Set Friends
+	 *
+	 * @param User $friends
+	 * @return User
+	 */
+	public function setFriends($friends)
+	{
+		$this->friends = $friends;
 
 		return $this;
 	}

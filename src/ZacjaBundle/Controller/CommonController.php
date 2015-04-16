@@ -19,7 +19,7 @@ class CommonController extends Controller{
 		    $username = $this->get('security.token_storage')->getToken()->getUser();
 
 		    $user = $this->getDoctrine()->getRepository("ZacjaBundle:User")->findOneByUsername($username);
-		    dump($user);
+
 		    $signedin = true;
 	    }else{
 		    $username = 'stranger';

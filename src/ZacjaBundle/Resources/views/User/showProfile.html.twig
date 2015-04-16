@@ -11,7 +11,11 @@
 	<p class="about">{{ user.profile.about }}</p>
 
 	{% if canEdit %}
-		<a href="{{ path('zacja_user_editprofile') }}">edit profile</a>
+		<a href="{{ path('zacja_user_editprofile') }}">Edit profile</a>
+	{%  elseif signedIn == true and areFriends == false and canEdit == false %}
+		<p id="areFriends"><a href="{{ path('addFriend', {'friend': user.username}) }}">Add Friend</a></p>
+	{%  elseif signedIn == true and areFriends == true and canEdit == false %}
+		<p class="friends">We are Friends!</p>
 	{% endif %}
 
 	{{ render(controller('ZacjaBundle:User:getUserTrainings', { 'user': user.username, 'limit': 4})) }}

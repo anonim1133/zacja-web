@@ -17,9 +17,16 @@ class UserController extends Controller{
 	public function showProfileAction($user){
 
 		$canEdit = false;
+		$signedIn = false;
+		$areFriends = false;
 
 		if ($this->get('security.context')->isGranted('ROLE_USER')){//signed in
+			$signedIn = true;
 			$username = $this->get('security.token_storage')->getToken()->getUser();
+
+			// Check if they are friends
+			if($this->getDoctrine()->getRepository("ZacjaBundle:User")->areFriends($username, $user))
+				$areFriends = true;
 
 			if($username == $user){//signed as user which profile is shown
 				$canEdit = true;
@@ -28,21 +35,11 @@ class UserController extends Controller{
 
 		$user = $this->getDoctrine()->getRepository("ZacjaBundle:User")->findOneByUsername($user);
 
-		/*
-		$profile = $user->getProfile();
-		$badge = $this->getDoctrine()->getRepository("ZacjaBundle:Badge")->findOneById(1);
-
-		$profile->getBadges()->add($badge);
-		$badge->getCaptors()->add($profile);
-
-		dump($user->getProfile()->getBadges());
-
-
-		$this->getDoctrine()->getEntityManager()->flush();
-		*/
 		return $this->render(
 			'ZacjaBundle:User:showProfile.html.twig', array(
 			'user' => $user,
+			'areFriends' => $areFriends,
+			'signedIn' => $signedIn,
 			'canEdit' => $canEdit
 		));
 	}
@@ -60,7 +57,6 @@ class UserController extends Controller{
     }
 
 	public function getUserTrainingsAction($user, $limit = null){
-		dump($user);
 		$trainings = $this->getDoctrine()->getRepository("ZacjaBundle:Training")->findByUserName($user, $limit);
 
 		return $this->render(
@@ -164,5 +160,39 @@ class UserController extends Controller{
 		    array('trainings' => $trainings)
 	    );
     }
+
+	/**
+	 * @Route("/ForeverAlone/", name="foreverAlone")
+	 */
+	public function feelsAction(){
+		return $this->render("ZacjaBundle:Common:foreveralone.html.twig");
+	}
+
+	/**
+	 * @Route("/user/addFriend/{friend}", name="addFriend")
+	 */
+	public function addFriendAction($friend){
+		if ($this->get('security.context')->isGranted('ROLE_USER')){//signed in
+			$username = $this->get('security.token_storage')->getToken()->getUser();
+
+			if($username == $friend){//trying to become friends with himself
+				return $this->redirectToRoute('foreverAlone');
+			}
+
+			//Check if they are friends already. If they are, redirect to profile page
+			if($this->getDoctrine()->getRepository("ZacjaBundle:User")->areFriends($username, $friend))
+				return $this->redirectToRoute('zacja_user_showprofile', array('user' => $friend));
+
+			//Make them friends!
+			$user = $this->getDoctrine()->getRepository("ZacjaBundle:User")->findOneByUsername($username);
+			$friend = $this->getDoctrine()->getRepository("ZacjaBundle:User")->findOneByUsername($friend);
+
+			$user->getFriends()->add($friend);
+
+			$this->getDoctrine()->getEntityManager()->flush();
+		}
+
+		return $this->redirectToRoute('zacja_user_showprofile', array('user' => $friend->getUserName()));
+	}
 
 }

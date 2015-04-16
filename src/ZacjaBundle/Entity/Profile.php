@@ -13,6 +13,10 @@ use Doctrine\ORM\Mapping as ORM;
 class Profile
 {
 
+	public function __construct()
+	{
+		$this->badges = new \Doctrine\Common\Collections\ArrayCollection();
+	}
 
     /**
      * @var integer

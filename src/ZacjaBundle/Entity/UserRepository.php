@@ -1,5 +1,5 @@
 <?php
-namespace Acme\UserBundle\Entity;
+namespace ZacjaBundle\Entity;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -62,5 +62,15 @@ class UserRepository extends EntityRepository implements UserProviderInterface
 	public function supportsClass($class)
 	{
 		return $this->getEntityName() === $class || is_subclass_of($class, $this->getEntityName());
+	}
+
+	public function areFriends($user, $friend){
+		$user = $this->getEntityManager()->getRepository($this->getEntityName())->findOneByUsername($user);
+		$friend = $this->getEntityManager()->getRepository($this->getEntityName())->findOneByUsername($friend);
+
+		$friends = $user->getFriends();
+		$friends->initialize();
+
+		return $friends->contains($friend);
 	}
 }
