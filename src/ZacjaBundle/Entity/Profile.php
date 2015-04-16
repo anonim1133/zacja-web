@@ -12,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Profile
 {
+
+
     /**
      * @var integer
      *
@@ -241,4 +243,30 @@ class Profile
     {
         return $this->about;
     }
+
+	/**
+	 * @ORM\ManyToMany(targetEntity="Badge", inversedBy="captors")
+	 * @ORM\JoinTable(name="badges_users_own")
+	 **/
+	private $badges;
+
+	/**
+	 * @return Badge
+	 */
+	public function getBadges(){
+		return $this->badges;
+	}
+
+	/**
+	 * Set Badge
+	 *
+	 * @param integer $badgeId
+	 * @return Badge
+	 */
+	public function setBadges($badges)
+	{
+		$this->badges = $badges;
+
+		return $this;
+	}
 }
