@@ -156,9 +156,10 @@ class Training
      * @param integer $score
      * @return Training
      */
-    public function setScore($score)
-    {
+    public function setScore($score){
         $this->score = $score;
+
+	    $this->user->getProfile()->setScore($score);
 
         return $this;
     }
