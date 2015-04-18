@@ -35,8 +35,8 @@ class TrainingController extends Controller
 
 			//'_id, id, score, gpx, training_type, time, time_active, moves, speed_max, speed_avg, tempo_min, tempo_avg,
 		    // distance, altitude_min, altitude_max, altitude_upward, altitude_downward, gpx_file, '
-		    $t->setUserId($user->getId());
-		    $t->setUser($em->getRepository('ZacjaBundle:User')->findOneById($user->getId()));
+		    $t->setUserId($user->getUserId());
+		    $t->setUser($em->getRepository('ZacjaBundle:User')->findOneById($user->getUserId()));
 		    $t->setScore($training['score']);
 		    $t->setDate($date);
 		    $t->setType($training['training_type']);
