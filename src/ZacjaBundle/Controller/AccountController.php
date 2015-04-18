@@ -118,7 +118,10 @@ class AccountController extends Controller{ //ToDo: Move database operations to 
             $registration->getUser()->setIsActive(false);
             $registration->getUser()->setRoles(0);
             $registration->getUser()->setRegistrationDate(new \DateTime('now'));
-	        $registration->getUser()->setProfile(new Profile());
+
+	        $profile = new Profile();
+	        $profile->setScore(1023);//points for registration. Almost enough to get next level.
+	        $registration->getUser()->setProfile($profile);
 
             $em->persist($registration->getUser());
             $em->flush();
