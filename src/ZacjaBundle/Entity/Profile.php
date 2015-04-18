@@ -238,6 +238,15 @@ class Profile
 		return (integer)$nextLevel;
 	}
 
+	/**
+	 * Get points for next level
+	 * @return integer
+	 */
+	public function getPointsToNextLevel(){
+		$points = $this->getPointsForNextLevel();
+
+		return $points - $this->score;
+	}
     /**
      * Set avatar
      *
