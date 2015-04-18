@@ -300,7 +300,7 @@ class User implements  UserInterface, \Serializable{
 	private $profile;
 
 	/**
-	 * @return User
+	 * @return Profile
 	 */
 	public function getProfile(){
 		return $this->profile;

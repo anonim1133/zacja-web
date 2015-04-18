@@ -162,9 +162,24 @@ class Profile
      * @param integer $score
      * @return Profile
      */
-    public function setScore($score)
-    {
-        $this->score = $score;
+    public function setScore($score){
+        $this->score += $score;
+
+
+	    $score = $this->score;
+	    $nextLevel = 24;
+
+
+	    $level = 0;
+	    while(true){
+		    $nextLevel = ($level <= 1)?1024:ceil($nextLevel*2 + (($nextLevel/16) * ($level==0?1:$level)));
+
+		    if($score >= $nextLevel) $level++;
+		    elseif($level < 1) $level = 1;
+		    else break;
+	    }
+
+	    $this->setLevel($level);
 
         return $this;
     }
@@ -201,6 +216,27 @@ class Profile
     {
         return $this->level;
     }
+
+	/**
+	 * Get points for next level
+	 * @return integer
+	 */
+	public function getPointsForNextLevel(){
+		$score = $this->score;
+		$nextLevel = 24;
+
+
+		$level = 0;
+		while(true){
+			$nextLevel = ($level <= 1)?1024:ceil($nextLevel*2 + (($nextLevel/16) * ($level==0?1:$level)));
+
+			if($score >= $nextLevel) $level++;
+			elseif($level < 1) $level = 1;
+			else break;
+		}
+
+		return (integer)$nextLevel;
+	}
 
     /**
      * Set avatar
