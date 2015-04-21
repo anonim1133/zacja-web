@@ -7,6 +7,9 @@
 
 	{# ToDo: Graphic corresponding to training type #}
 
+	{% if can_edit == true %}
+		<a href="{{ path('training_remove', {'id':  training.id }) }}">Remove</a>
+	{% endif %}
 {% if gpx is defined %}
 	<div id="training-map-canvas"></div>
 	<div id="trainingChartContainer" style="height: 300px; width: 100%;"></div>
