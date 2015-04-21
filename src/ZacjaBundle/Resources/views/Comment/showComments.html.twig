@@ -1,0 +1,19 @@
+<div id="comments">
+	<ul>
+		{% if comments|length > 0 %}
+			{% for comment in comments %}
+
+				<li>
+					<span class="comment_author">{{ comment.author.username }} lvl{{ comment.author.profile.level }}</span>
+					<span class="comment_date">{{ comment.date|date("d F, Y H:i") }}</span>
+					<span class="comment_content">{{ comment.content }}</span>
+				</li>
+			{% endfor %}
+		{% endif %}
+	</ul>
+
+	{% if form is defined %}
+		{{ form(form) }}
+	{% endif %}
+
+</div>

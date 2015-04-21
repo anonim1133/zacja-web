@@ -9,4 +9,6 @@
 
 	{{ render(controller('ZacjaBundle:User:getUserConquers', {'user': user})) }}
 
+	{{ render(controller('ZacjaBundle:Comment:showComments', {'request': app.request, 'path': app.request.getPathInfo})) }}
+
 {% endblock %}
