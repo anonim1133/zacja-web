@@ -119,31 +119,35 @@ class UserController extends Controller{
 	 * @Method("POST")
 	 */
 	public function saveProfileAction(){
-		$request = $this->getRequest();
+		if ($this->get('security.context')->isGranted('ROLE_USER')){//signed in
+			$request = $this->getRequest();
 
-		$username = $this->get('security.token_storage')->getToken()->getUser();
-		$profile = $this->getDoctrine()->getRepository("ZacjaBundle:User")->findOneBy(array("username" => $username))->getProfile();
+			$username = $this->get('security.token_storage')->getToken()->getUser();
+			$profile = $this->getDoctrine()->getRepository("ZacjaBundle:User")->findOneBy(array("username" => $username))->getProfile();
 
-		$form = $this->createFormBuilder($profile)
-			->add('name')
-			->add('pseudonym')
-			->add('surname')
-			->add('avatar')
-			->add('about')
-			->add('save', 'submit', array('label' => 'Edit profile'))
-			->getForm();
+			$form = $this->createFormBuilder($profile)
+				->add('name')
+				->add('pseudonym')
+				->add('surname')
+				->add('avatar')
+				->add('about')
+				->add('save', 'submit', array('label' => 'Edit profile'))
+				->getForm();
 
-		$form->handleRequest($request);
+			$form->handleRequest($request);
 
-		if ($form->isValid()){
-			$em = $this->getDoctrine()->getManager();
+			if($form->isValid()){
+				$em = $this->getDoctrine()->getManager();
 
-			$em->persist($profile);
-			$em->flush();
+				$em->persist($profile);
+				$em->flush();
 
-			return $this->redirectToRoute('index');
+				return $this->redirectToRoute('index');
+			}else{
+				return $this->redirectToRoute('zacja_user_editprofile');
+			}
 		}else{
-			return $this->redirectToRoute('zacja_user_editprofile');
+			return $this->redirectToRoute('index');
 		}
 	}
 
