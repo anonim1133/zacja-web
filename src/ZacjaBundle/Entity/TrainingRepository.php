@@ -55,4 +55,20 @@ class TrainingRepository extends EntityRepository {
 			return array();
 		}
 	}
+
+	public function findFriendsTrainings($username, $limit = 4){
+		$em = $this->getEntityManager();
+
+		$user = $em->getRepository("ZacjaBundle:User")->findOneByusername($username);
+		$friends = $user->getFriends();
+		$friends->initialize();
+
+		$trainings = $em->getRepository("ZacjaBundle:Training")->findBy(array('user' => $friends->toArray()), array('date' => 'DESC'),$limit);
+
+
+
+
+
+		return $trainings;
+	}
 }

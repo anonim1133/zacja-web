@@ -6,6 +6,20 @@
 
 	{{ render(controller('ZacjaBundle:Common:header')) }}
 
+	{% if signed_in and friends_trainings is not null %}
+		<div id="last_friends_trainings_list">
+			<ul>
+				{% for training in friends_trainings %}
+					<li>
+						<a href="/training/type/{{ training.type }}">{{ training.type }}</a> by
+						<a href="/user/{{ training.user.username }}">{{ training.user.username }}</a>
+						<p><a href="/training/{{ training.id }}">{{ training.date|date("d F, Y H:i") }}</a></p>
+					</li>
+				{% endfor %}
+			</ul>
+		</div>
+	{% endif %}
+
 	<div id="last_trainings_list">
 		<ul>
 			{% for training in trainings %}
