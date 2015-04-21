@@ -69,6 +69,9 @@ class TrainingController extends Controller
 			if($username === $training->getUser()->getUserName()){//signed in as user whoose training it is
 				$em = $this->getDoctrine()->getEntityManager();
 
+				$profile = $this->getDoctrine()->getRepository("ZacjaBundle:User")->findOneByUsername($username)->getProfile();
+				$profile->setScore(-$training->getScore()); //Sets score and evaluates user level.
+
 				$em->remove($training);
 				$em->flush();
 			}
