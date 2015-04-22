@@ -1,4 +1,4 @@
-<header>
+	<header>
 
 	<h1>Welcome {% if username is defined %} {{ username }} {%  endif %}!</h1>
 
@@ -10,8 +10,17 @@
 			<a href="{{ path('showSignIn') }}">Sign In</a>
 			</br>
 			<a href="{{ path('showSignUp') }}">Sign Up</a>
-		{% else %}
-	<a href="{{ path('zacja_account_signout') }}">Sign Out</a>
-{% endif %}
+	{% else %}
+		<a href="{{ path('zacja_account_signout') }}">Sign Out</a>
+
+		<ul id="notification-list">
+			{% for notification in user.notifications.notifications %}
+				<li>
+					<span class="notification_date">{{ notification.date|date("d F, Y H:i") }}</span>
+					<span class="notification_content">{{ notification.content }}</span>
+				</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
 
 </header>

@@ -5,6 +5,7 @@ namespace ZacjaBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * User
@@ -309,7 +310,7 @@ class User implements  UserInterface, \Serializable{
 	/**
 	 * Set profile
 	 *
-	 * @param integer $profileId
+	 * @param integer $profile
 	 * @return User
 	 */
 	public function setProfile($profile)
@@ -341,6 +342,37 @@ class User implements  UserInterface, \Serializable{
 	public function setFriends($friends)
 	{
 		$this->friends = $friends;
+
+		return $this;
+	}
+
+	/**
+	 * @ORM\OneToOne(targetEntity="ZacjaBundle\Entity\Notification", cascade={"persist"})
+	 * @ORM\JoinColumn(name="id", referencedColumnName="id")
+	 **/
+	private $notifications;
+
+	/**
+	 * @return array Notifications
+	 */
+	public function getNotifications(){
+		return $this->notifications;
+	}
+
+	/**
+	 * Set notifications
+	 *
+	 * @param array $notification
+	 * @return User
+	 */
+	public function setNotifications($notifications){
+		$this->notifications = $notifications;
+
+		return $this;
+	}
+
+	public function pushNotification($notification){
+		$this->notifications->setNotifications($notification);
 
 		return $this;
 	}

@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
+use ZacjaBundle\Entity\Notification;
 use ZacjaBundle\Entity\User;
 use ZacjaBundle\Form\Model\Login;
 use ZacjaBundle\Form\Type\LoginType;
@@ -123,8 +124,11 @@ class AccountController extends Controller{ //ToDo: Move database operations to 
 	        $profile->setScore(1023);//points for registration. Almost enough to get next level.
 	        $registration->getUser()->setProfile($profile);
 
+	        $notifications = new Notification();
+	        $registration->getUser()->setNotifications($notifications);
+
             $em->persist($registration->getUser());
-            $em->flush();
+	        $em->flush();
 
             return $this->redirect($this->generateUrl('index'), 301);
         }
