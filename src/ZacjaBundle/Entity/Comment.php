@@ -6,9 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Comment
- *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="ZacjaBundle\Entity\CommentRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Comment{
     /**
@@ -177,4 +177,10 @@ class Comment{
     {
         return $this->content;
     }
+
+	/** @ORM\PrePersist */
+	public function onPrePersist(){
+		//Add points for posting comment
+		$this->author->getProfile()->setScore(8);
+	}
 }

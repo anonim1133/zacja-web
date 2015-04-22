@@ -12,7 +12,7 @@
 		{% endif %}
 	</ul>
 
-	{% if form is defined %}
+	{% if form is defined and signed_in == true %}
 		{{ form(form) }}
 	{% endif %}
 
