@@ -2,36 +2,28 @@
 namespace ZacjaBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 
 
 class ConquerRepository extends EntityRepository {
 	public  function getLast($limit = 16){
-		$em = $this->getEntityManager();
-		/*
-		$dql = 'SELECT SUM(c.score) AS score, COUNT(*) as count GROUP BY userId';
-		$conquers = $em->createQuery($dql)->getResult();
 
-		$qb = $em->createQueryBuilder();
-		$qb->select(
-			'SUM(c.score) AS score',
-			'COUNT(c.id)',
-			'c.userId'
-		)
-			->from('ZacjaBundle\Entity\Conquer', 'c')
-			->groupBy('c.userId')
-			->setMaxResults( $limit );
+		$cacheDriver = new \Doctrine\Common\Cache\ApcCache();
 
-		$conquers = $qb->getQuery()->getArrayResult();
-		*/
+		if(!$cacheDriver->contains('conquers_limit_' . $limit)){
+			$em = $this->getEntityManager();
 
+			$sql = 'SELECT SUM(c.score) AS score, COUNT(*) as count, user_id, (SELECT username from user where id = user_id) as user_name FROM (SELECT * FROM Conquer ORDER BY id DESC LIMIT '.(int)$limit.') c GROUP BY user_id';
 
-		$sql = 'SELECT SUM(c.score) AS score, COUNT(*) as count, user_id, (SELECT username from user where id = user_id) as user_name FROM (SELECT * FROM Conquer ORDER BY id DESC LIMIT '.(int)$limit.') c GROUP BY user_id';
+			$stmt = $em->getConnection()->prepare($sql);
+			$stmt->execute();
+			$conquers = $stmt->fetchAll();
 
-		$stmt = $em->getConnection()->prepare($sql);
-		$stmt->execute();
+			$cacheDriver->save('conquers_limit_' . $limit, $conquers, 32);
+		}else{
+			$conquers = $cacheDriver->fetch('conquers_limit_' . $limit);
+		}
 
-		return $stmt->fetchAll();
+		return $conquers;
 	}
 
 	public function findByUserName($username, $limit = 16){
