@@ -35,20 +35,6 @@ class Badge
      */
     private $description;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="level", type="integer")
-     */
-    private $level;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="date", type="datetime")
-     */
-    private $date;
-
 
     /**
      * Get id
@@ -129,51 +115,6 @@ class Badge
         return $this->description;
     }
 
-    /**
-     * Set level
-     *
-     * @param integer $level
-     * @return Badge
-     */
-    public function setLevel($level)
-    {
-        $this->level = $level;
-
-        return $this;
-    }
-
-    /**
-     * Get level
-     *
-     * @return integer 
-     */
-    public function getLevel()
-    {
-        return $this->level;
-    }
-
-    /**
-     * Set date
-     *
-     * @param \DateTime $date
-     * @return Badge
-     */
-    public function setDate($date)
-    {
-        $this->date = $date;
-
-        return $this;
-    }
-
-    /**
-     * Get date
-     *
-     * @return \DateTime 
-     */
-    public function getDate()
-    {
-        return $this->date;
-    }
 
 	/**
 	 *
