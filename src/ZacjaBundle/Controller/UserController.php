@@ -20,20 +20,43 @@ class UserController extends Controller{
 		$signedIn = false;
 		$areFriends = false;
 
+		$user = $this->getDoctrine()->getRepository("ZacjaBundle:User")->findOneByUsername($user);
+
 		if ($this->get('security.context')->isGranted('ROLE_USER')){//signed in
 			$signedIn = true;
 			$username = $this->get('security.token_storage')->getToken()->getUser();
 
 			// Check if they are friends
-			if($this->getDoctrine()->getRepository("ZacjaBundle:User")->areFriends($username, $user))
+			if($this->getDoctrine()->getRepository("ZacjaBundle:User")->areFriends($username, $user->getUsername()))
 				$areFriends = true;
 
-			if($username == $user){//signed as user which profile is shown
+			if($username == $user->getUsername()){//signed as user which profile is shown
 				$canEdit = true;
+
+				$profile = $user->getProfile();
+				if(count($profile->getAbout()) == 0){
+					$notification = array(
+						'content' => 'Tell us about your self, fill your profile!',
+						'date' => time(),
+						'url' => 'editprofile'
+					);
+
+					$notification_duplicate = false;
+					foreach($profile->getNotifications()->getNotifications() as $n){//if user got that notification
+						if(strcmp($n['content'], $notification['content']) == 0){
+							$notification_duplicate = true;
+							break;
+						}
+					}
+
+					if(!$notification_duplicate){// if he hasn't got it yet - push it
+						$profile->pushNotification($notification);
+						$this->getDoctrine()->getEntityManager()->flush();
+					}
+				}
+
 			}
 		}
-
-		$user = $this->getDoctrine()->getRepository("ZacjaBundle:User")->findOneByUsername($user);
 
 		return $this->render(
 			'ZacjaBundle:User:showProfile.html.twig', array(
@@ -87,7 +110,7 @@ class UserController extends Controller{
 	}
 
 	/**
-	 * @Route("/user/editprofile/"))
+	 * @Route("/user/editprofile/"), name="editprofile")
 	 * @Method("GET")
 	 */
 	public function editProfileAction(){

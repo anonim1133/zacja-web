@@ -14,7 +14,7 @@
 		<a href="{{ path('zacja_account_signout') }}">Sign Out</a>
 
 		<ul id="notification-list">
-			{% for notification in user.notifications.notifications %}
+			{% for notification in user.profile.notifications.notifications %}
 				<li>
 					<span class="notification_date">{{ notification.date|date("d F, Y H:i") }}</span>
 					<span class="notification_content">{{ notification.content }}</span>
