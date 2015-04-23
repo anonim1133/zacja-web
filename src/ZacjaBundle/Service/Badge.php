@@ -10,9 +10,11 @@ class Badge {
 	 * @var EntityManager
 	 */
 	protected $em;
+	protected $notification;
 
-	public function __construct(EntityManager $entityManager){
+	public function __construct(EntityManager $entityManager, Notification $notification){
 		$this->em = $entityManager;
+		$this->notification = $notification;
 	}
 
 	public function add($uid, $bid){
@@ -20,6 +22,8 @@ class Badge {
 		$profile = $this->em->getRepository("ZacjaBundle:User")->findOneById($uid)->getProfile();
 
 		$profile->getBadges()->add($badge);
+
+		$this->notification->setContent('You just got new Badge!')->push($uid);
 
 		$this->em->flush();
 	}

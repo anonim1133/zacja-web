@@ -11,6 +11,7 @@ services:
       class:  ZacjaBundle\Service\Badge
       arguments:
           entityManager: "@doctrine.orm.entity_manager"
+          Notification: "@notification"
 
   notification:
       class: ZacjaBundle\Service\Notification
