@@ -12,8 +12,12 @@ use Symfony\Component\Validator\Constraints\DateTime;
  * @ORM\Entity(repositoryClass="ZacjaBundle\Entity\NotificationRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Notification
-{
+class Notification{
+
+	public function __construct(){
+		$this->notifications = Array();
+	}
+
     /**
      * @var integer
      *

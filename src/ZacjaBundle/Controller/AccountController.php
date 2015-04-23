@@ -123,12 +123,14 @@ class AccountController extends Controller{ //ToDo: Move database operations to 
 	        $notifications = new Notification();
 
 	        $profile = new Profile();
-	        $profile->setScore(1023);//points for registration. Almost enough to get next level.
 	        $profile->setNotifications($notifications);
+	        $profile->setScore(1023);//points for registration. Almost enough to get next level.
 	        $registration->getUser()->setProfile($profile);
 
             $em->persist($registration->getUser());
 	        $em->flush();
+
+	        $this->get('badge')->add($registration->getUser()->getId(), 1);
 
             return $this->redirect($this->generateUrl('index'), 301);
         }
