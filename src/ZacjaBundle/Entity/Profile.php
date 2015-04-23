@@ -165,6 +165,7 @@ class Profile
     public function setScore($score){
         $this->score += $score;
 
+	    $level_before = $this->level;
 
 	    $score = $this->score;
 	    $nextLevel = 24;
@@ -179,7 +180,23 @@ class Profile
 		    else break;
 	    }
 
-	    $this->setLevel($level);
+	    if($level <> $level_before){
+		    $this->setLevel($level);
+
+		    if($level > $level_before)
+			    $notification = array(
+				    'content' => 'New level! Now you are at level ' . $level . '! Congrats and keep up good work mate!',
+				    'date' => time(),
+				    'url' => 'profile'
+			    );
+		    else
+			    $notification = array(
+				    'content' => 'You have been demoted from level ' . $level_before . ' to level ' . $level . ' :(',
+				    'date' => time(),
+				    'url' => 'profile'
+			    );
+		    $this->pushNotification($notification);
+	    }
 
         return $this;
     }
