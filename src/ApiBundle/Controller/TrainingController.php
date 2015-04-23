@@ -33,10 +33,10 @@ class TrainingController extends Controller
 			//write training to db
 			$t = new Training();
 
-			//'_id, id, score, gpx, training_type, time, time_active, moves, speed_max, speed_avg, tempo_min, tempo_avg,
-		    // distance, altitude_min, altitude_max, altitude_upward, altitude_downward, gpx_file, '
-		    $t->setUserId($user->getUserId());
-		    $t->setUser($em->getRepository('ZacjaBundle:User')->findOneById($user->getUserId()));
+			$user = $em->getRepository('ZacjaBundle:User')->findOneById($user->getUserId());
+
+		    $t->setUserId($user->getId());
+		    $t->setUser($user);
 		    $t->setScore($training['score']);
 		    $t->setDate($date);
 		    $t->setType($training['training_type']);
@@ -64,10 +64,32 @@ class TrainingController extends Controller
 		    $em->persist($t);
 		    $em->flush();
 
-		    if($em->contains($t))
+		    if($em->contains($t)){
 			    $response->setContent("Success");
-		    else
+
+			    if($t->getType() == 'Walking'){
+				    $date = new DateTime();
+				    if($this->getDoctrine()->getRepository("ZacjaBundle:Training")->getStepsByDay($user->getId(), $t->getDate()->format('Y-m-d')) >= 10000){
+					    $this->get('badge')->add($user->getId(), 4);
+				    }
+
+				    if($this->getDoctrine()->getRepository("ZacjaBundle:Training")->getTotalDistance($user->getId, $t->getType()) >= 32){
+					    $this->get('badge')->add($user->getId(), 5);
+				    }
+
+			    }elseif($t->getType() == 'Biking'){
+				    if($this->getDoctrine()->getRepository("ZacjaBundle:Training")->getTotalDistance($user->getId, $t->getType()) >= 1024){
+					    $this->get('badge')->add($user->getId(), 2);
+				    }
+			    }elseif($t->getType() == 'Running'){
+				    if($this->getDoctrine()->getRepository("ZacjaBundle:Training")->getTotalDistance($user->getId, $t->getType()) >= 256){
+					    $this->get('badge')->add($user->getId(), 3);
+				    }
+			    }
+
+		    }else{
 			    $response->setContent("Failure");
+		    }
 	    }else{
 		    $response->setContent("Invalid userkey");
 	    }

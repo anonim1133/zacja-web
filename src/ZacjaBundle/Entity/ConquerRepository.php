@@ -49,4 +49,15 @@ class ConquerRepository extends EntityRepository {
 			return array();
 		}
 	}
+
+	public  function getCount($uid){
+		$em = $this->getEntityManager();
+
+		$dql = 'SELECT COUNT(c)  FROM ZacjaBundle:Conquer c WHERE c.userId = ?1';
+
+		$query = $em->createQuery($dql);
+		$query->setParameter(1, $uid);
+
+		return (int)$query->getSingleResult()[1];
+	}
 }

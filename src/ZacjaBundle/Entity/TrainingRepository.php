@@ -82,4 +82,43 @@ class TrainingRepository extends EntityRepository {
 
 		return $trainings;
 	}
+
+	public function getTotalDistance($uid, $type){
+		$distance = 0;
+
+		$em = $this->getEntityManager();
+		$qb = $em->createQueryBuilder();
+
+		$qb->select('sum(t.distance)')
+			->from('ZacjaBundle:Training', 't')
+			->where('t.userId = ?1')
+			->andWhere('t.type = ?2');
+		$qb->setParameter(1, $uid);
+		$qb->setParameter(2, $type);
+
+		$query = $qb->getQuery();
+
+		$distance = $query->getSingleResult()[1];
+
+		return $distance;
+	}
+
+	public function getStepsByDay($uid, $date){
+		$em = $this->getEntityManager();
+
+		$dql = '
+	        SELECT sum(t.moves) as steps, t.date as date
+	        FROM ZacjaBundle:Training t
+	        WHERE t.userId = ?1
+	        AND t.type = ?2
+	        AND DATE_DIFF(t.date, ?3) < 1';
+
+		$query = $em->createQuery($dql);
+		$query->setParameter(1, $uid);
+		$query->setParameter(2, 'Walking');
+		$query->setParameter(3, $date);
+
+		return (int)$query->getSingleResult()['steps'];
+
+	}
 }

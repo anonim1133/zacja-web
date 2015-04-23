@@ -27,12 +27,13 @@ class ConquerController extends Controller
 	    $date = new \DateTime($conquer['date']);
 
 	    $user = $em->getRepository('ApiBundle:ApiKeys')->findOneBy(array('apikey' => $key));
+		$user = $em->getRepository('ZacjaBundle:User')->findOneById($user->getUserId());
 
 	    if($user != null){
 			$new_conquer =  new Conquer();
 
-		    $new_conquer->setUserId($user->getUserId());
-		    $new_conquer->setUser($em->getRepository('ZacjaBundle:User')->findOneById($user->getUserId()));
+		    $new_conquer->setUserId($user->getId());
+		    $new_conquer->setUser($user);
 		    $new_conquer->setDate($date);
 		    $new_conquer->setScore($conquer['score']);
 		    $new_conquer->setLongitude($conquer['lon']);
@@ -52,10 +53,15 @@ class ConquerController extends Controller
 			    $em->persist($new_conquer);
 			    $em->flush();
 
-			    if($em->contains($new_conquer))
+			    if($em->contains($new_conquer)){
 				    $response->setContent("Success");
-			    else
+
+				    if($this->getDoctrine()->getRepository("ZacjaBundle:Conquer")->getCount($user->getId()) > 1024){
+					    $this->get('badge')->add($user->getId(), 7);
+				    }
+			    }else{
 				    $response->setContent("Failure");
+			    }
 		    }
 	    }
 

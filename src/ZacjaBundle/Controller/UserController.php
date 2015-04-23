@@ -215,6 +215,9 @@ class UserController extends Controller{
 			$user->getFriends()->add($friend);
 
 			$this->getDoctrine()->getEntityManager()->flush();
+
+			if(count($user->getFriends()) > 32)
+				$this->get('badge')->add($user->getId(), 6);
 		}
 
 		return $this->redirectToRoute('zacja_user_showprofile', array('user' => $friend->getUserName()));
