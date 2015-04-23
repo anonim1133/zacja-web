@@ -120,12 +120,12 @@ class AccountController extends Controller{ //ToDo: Move database operations to 
             $registration->getUser()->setRoles(0);
             $registration->getUser()->setRegistrationDate(new \DateTime('now'));
 
+	        $notifications = new Notification();
+
 	        $profile = new Profile();
 	        $profile->setScore(1023);//points for registration. Almost enough to get next level.
+	        $profile->setNotifications($notifications);
 	        $registration->getUser()->setProfile($profile);
-
-	        $notifications = new Notification();
-	        $registration->getUser()->setNotifications($notifications);
 
             $em->persist($registration->getUser());
 	        $em->flush();

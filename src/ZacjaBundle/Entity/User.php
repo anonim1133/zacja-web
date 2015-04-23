@@ -345,35 +345,4 @@ class User implements  UserInterface, \Serializable{
 
 		return $this;
 	}
-
-	/**
-	 * @ORM\OneToOne(targetEntity="ZacjaBundle\Entity\Notification", cascade={"persist"})
-	 * @ORM\JoinColumn(name="id", referencedColumnName="id")
-	 **/
-	private $notifications;
-
-	/**
-	 * @return array Notifications
-	 */
-	public function getNotifications(){
-		return $this->notifications;
-	}
-
-	/**
-	 * Set notifications
-	 *
-	 * @param array $notification
-	 * @return User
-	 */
-	public function setNotifications($notifications){
-		$this->notifications = $notifications;
-
-		return $this;
-	}
-
-	public function pushNotification($notification){
-		$this->notifications->setNotifications($notification);
-
-		return $this;
-	}
 }

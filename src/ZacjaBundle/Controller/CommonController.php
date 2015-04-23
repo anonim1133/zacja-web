@@ -14,7 +14,7 @@ class CommonController extends Controller{
      */
     public function headerAction(){
 	    $user = null;
-	    $points_to_next_level = 0;
+
 	    if ($this->get('security.context')->isGranted('ROLE_USER')){
 		    $username = $this->get('security.token_storage')->getToken()->getUser();
 
