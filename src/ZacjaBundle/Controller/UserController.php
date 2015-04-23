@@ -6,7 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Component\HttpKernel\Profiler\Profile;
 
 class UserController extends Controller{
 
@@ -50,8 +49,7 @@ class UserController extends Controller{
 					}
 
 					if(!$notification_duplicate){// if he hasn't got it yet - push it
-						$profile->pushNotification($notification);
-						$this->getDoctrine()->getEntityManager()->flush();
+						$this->get('notification')->setContent($notification['content'])->setUrl($notification['url'])->push($user->getId());
 					}
 				}
 
