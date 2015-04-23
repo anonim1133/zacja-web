@@ -21,9 +21,18 @@ class Badge {
 		$badge = $this->em->getRepository("ZacjaBundle:Badge")->findOneById($bid);
 		$profile = $this->em->getRepository("ZacjaBundle:User")->findOneById($uid)->getProfile();
 
-		$profile->getBadges()->add($badge);
+		$badges = $profile->getBadges()->getValues();
+		$duplicate = false;
+		foreach($badges as $badge){
+			if($badge->getId() == $bid) $duplicate = true;
+		}
 
-		$this->notification->setContent('You just got new Badge!')->push($uid);
+		if(!$duplicate){
+			$profile->getBadges()->add($badge);
+
+			$this->notification->setContent('You just got new Badge!')->push($uid);
+		}
+
 
 		$this->em->flush();
 	}
