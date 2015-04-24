@@ -20,6 +20,20 @@
 		</div>
 	{% endif %}
 
+	{% if signed_in and friends_conquers is not null %}
+		<div id="last_friends_conquers_list">
+			<ul>
+				{% for conquer in friends_conquers %}
+					<li>
+						<a href="/user/conquers/{{ conquer.user.username }}"> {{ conquer.score }} points </a> by
+						<a href="/user/{{ conquer.user.username }}">{{ conquer.user.username }}</a>
+						<p class="conquer_date">{{ conquer.date|date("d F, Y H:i") }}</p>
+					</li>
+				{% endfor %}
+			</ul>
+		</div>
+	{% endif %}
+
 	<div id="last_trainings_list">
 		<ul>
 			{% for training in trainings %}
@@ -37,7 +51,8 @@
 			{% for conquer in conquers %}
 				<li>
 					<a href="/user/conquers/{{ conquer.user_name }}"> {{ conquer.count }} conquers with {{ conquer.score }} points </a> by
-					<a href="/user/{{ conquer.user_name }}">{{ conquer.user_name }}</a></li>
+					<a href="/user/{{ conquer.user_name }}">{{ conquer.user_name }}</a>
+				</li>
 			{% endfor %}
 		</ul>
 	</div>

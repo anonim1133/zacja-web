@@ -50,6 +50,25 @@ class ConquerRepository extends EntityRepository {
 		}
 	}
 
+	public function findFriendsConquers($username, $limit = 4){
+		$cacheDriver = new \Doctrine\Common\Cache\ApcCache();
+
+		if(!$cacheDriver->contains('friends_conquers_for_' . $username. '_limit_' . $limit)){
+			$em = $this->getEntityManager();
+
+			$user = $em->getRepository("ZacjaBundle:User")->findOneByusername($username);
+			$friends = $user->getFriends();
+			$friends->initialize();
+
+			$trainings = $em->getRepository("ZacjaBundle:Conquer")->findBy(array('user' => $friends->toArray()), array('date' => 'DESC'),$limit);
+			$cacheDriver->save('friends_conquers_for_' . $username. '_limit_' . $limit, $trainings, 64);
+		}else{
+			$trainings = $cacheDriver->fetch('friends_conquers_for_' . $username. '_limit_' . $limit);
+		}
+
+		return $trainings;
+	}
+
 	public  function getCount($uid){
 		$em = $this->getEntityManager();
 

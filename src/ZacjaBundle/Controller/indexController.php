@@ -17,6 +17,7 @@ class indexController extends Controller
 
 	    $signed_in = false;
 	    $friends_trainings = null;
+	    $friends_conquers = null;
 
 	    $trainings = $em->getRepository('ZacjaBundle:Training')->getLast();
 	    $conquers = $em->getRepository('ZacjaBundle:Conquer')->getLast();
@@ -25,11 +26,13 @@ class indexController extends Controller
 		    $signed_in = true;
 		    $username = $this->get('security.token_storage')->getToken()->getUser();
 		    $friends_trainings = $em->getRepository('ZacjaBundle:Training')->findFriendsTrainings($username);
+		    $friends_conquers  = $em->getRepository('ZacjaBundle:Conquer') ->findFriendsConquers($username);
 	    }
 
 
 		    return $this->render('ZacjaBundle:index:index.html.twig',
 			    array('friends_trainings' => $friends_trainings,
+				    'friends_conquers' => $friends_conquers,
 				    'trainings' => $trainings,
 				    'conquers' => $conquers,
 				    'signed_in' => $signed_in
