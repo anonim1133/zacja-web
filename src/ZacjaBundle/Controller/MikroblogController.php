@@ -57,7 +57,7 @@ class MikroblogController extends Controller
 		    }
 
 	    }
-	    $comments = $this->getDoctrine()->getRepository("ZacjaBundle:Comment")->findByPath($path, array('id' => 'DESC'));
+	    $comments = $this->getDoctrine()->getRepository("ZacjaBundle:Comment")->findByPath($path, array('id' => 'DESC'), 64);
 
 	    return $this->render(
 		    'ZacjaBundle:Mikroblog:show.html.twig',

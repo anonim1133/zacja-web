@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 class CommentController extends Controller{
 
-    public function showCommentsAction(Request $request, $path){
+    public function showCommentsAction(Request $request, $path, $limit = 32){
 	    $signed_in = false;
 	    $username = null;
 
@@ -51,7 +51,7 @@ class CommentController extends Controller{
 		   }
 
 	   }
-		    $comments = $this->getDoctrine()->getRepository("ZacjaBundle:Comment")->findByPath($path, array('id' => 'DESC'));
+		    $comments = $this->getDoctrine()->getRepository("ZacjaBundle:Comment")->findByPath($path, array('id' => 'DESC'), $limit);
 
 		    return $this->render(
 			    'ZacjaBundle:Comment:showComments.html.twig',
