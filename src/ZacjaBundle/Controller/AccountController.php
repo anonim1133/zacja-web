@@ -33,8 +33,8 @@ class AccountController extends Controller{ //ToDo: Move database operations to 
         $session = $request->getSession();
 
         //Get user credentials from POST form
-        $username = $request->request->get('autorization')['user']['username'];
-        $password = $request->request->get('autorization')['user']['password'];
+        $username = $request->request->get('authorization')['user']['username'];
+        $password = $request->request->get('authorization')['user']['password'];
 
 
         //Authorize user
@@ -165,9 +165,14 @@ class AccountController extends Controller{ //ToDo: Move database operations to 
     public function signOutAction(){
 	    $request = $this->getRequest();
 	    $session = $request->getSession();
+
+	    $token = new AnonymousToken("", "");
+	    $this->get('security.token_storage')->setToken($token);
+	    $session->set('_security_main',  serialize($token));
+
 	    $session->clear();
 
-        return $this->redirect($this->generateUrl('index'), 301);
+	    return $this->redirect($this->generateUrl('index'), 301);
     }
 
     /**
