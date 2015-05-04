@@ -101,6 +101,86 @@ ul#notification-list li span.notification-content{
 
 /* /Header */
 
+/* Sign In */
+
+form[name="authorization"]{
+	margin:auto;
+	width: 384px;
+	text-align: center;
+}
+
+#authorization_user label{
+	padding-right: 8px;
+	font-size: large;
+}
+
+#authorization_user input[type="text"], #authorization_user input[type="password"]{
+	margin: 8px;
+	height: 32px;
+	font-size: large;
+}
+
+#authorization_SignIn{
+	color: #ffffff;
+	background: #86D3DB;
+	border:none;
+	width: 208px;
+	height: 32px;
+	float: right;
+	margin-right: 48px;
+}
+
+/* Sign Up */
+
+form[name="registration"]{
+	margin:auto;
+	width: 384px;
+	text-align: center;
+}
+
+#registration_user label{
+	padding-right: 8px;
+	font-size: large;
+	float: left;
+	clear:both;
+}
+
+#registration_user input[type="text"], #registration_user input[type="password"], #registration_user input[type="email"]{
+	margin: 8px;
+	height: 32px;
+	font-size: large;
+	float: right;
+	clear: right;
+}
+
+#registration > div:nth-child(2){
+	text-align: center;
+	clear: both;
+}
+
+#registration > div:nth-child(2) label{
+	font-size: large;
+	position: relative;
+	top: 8px;
+	float: left;
+}
+
+#registration > div:nth-child(2) input{
+	width: 32px;
+	height: 32px;
+	float: right;
+}
+
+#registration_Register{
+	color: #ffffff;
+	background: #86D3DB;
+	border:none;
+	width: 208px;
+	height: 32px;
+	float: right;
+	margin-right: 48px;
+	margin-top: 16px;
+}
 
 /* Index */
 
@@ -111,12 +191,70 @@ div#last_friends_trainings_list ul, div#last_trainings_list ul, div#last_friends
 	padding: 0;
 }
 
+div#last_friends_trainings_list ul li, div#last_trainings_list ul li, div#last_friends_conquers_list ul li, div#last_conquers_list ul li{
+	border-bottom: 1px solid;
+	border-color: #8899AA;
+}
+
+div#last_friends_trainings_list ul li:last-child, div#last_trainings_list ul li:last-child, div#last_friends_conquers_list ul li:last-child, div#last_conquers_list ul li:last-child{
+		border: none!important;
+}
+
 div#last_friends_trainings_list, div#last_trainings_list, div#last_friends_conquers_list, div#last_conquers_list{
 	background: rgb(234, 255, 253);
 	background: rgba(148, 233, 242, 0.1);
 	margin-left: 16px;
 	padding: 8px;
 	margin-bottom: 32px;
+}
+
+p.error{
+	margin: auto;
+	width: 384px;
+	padding: 32px;
+	border: 3px solid red;
+	background: darkred;
+	color: white;
+}
+
+/* Mikroblog */
+
+#mikroblog textarea{
+	width: 75%;
+	margin: auto;
+	display: block;
+	min-height: 128px;
+	background: #DAEFF2;
+	border: 2px solid #ADD3D8;
+	font-size: large;
+	color: #3D4B4C;
+}
+
+#mikroblog button{
+	margin: auto;
+	display: block;
+	background: #DAEFF2;
+	border: 2px solid #ADD3D8;
+	font-size: large;
+	color: #3D4B4C;
+}
+
+#entries ul{
+	list-style: none;
+	width: 85%;
+}
+
+#entries li p.comment-header{
+	border-bottom: 1px solid #DAEFF2;
+	margin: 0px;
+}
+
+#entries li p.comment-content{
+	border-left: 1px solid #DAEFF2;
+	margin: 0px;
+	padding-top: 16px;
+	padding-bottom: 16px;
+	padding-left: 32px;
 }
 
 @media all and (min-width: 1200px) {

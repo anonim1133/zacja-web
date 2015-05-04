@@ -4,20 +4,25 @@
 
 {% block body %}
 	{{ render(controller('ZacjaBundle:Common:header')) }}
+	<div id="mikroblog">
+		{% if form is defined and signed_in == true %}
+			{{ form(form) }}
+		{% endif %}
+	</div>
 
-	{% if form is defined and signed_in == true %}
-		{{ form(form) }}
-	{% endif %}
-
-	<div id="comments">
+	<div id="entries">
 		<ul>
 			{% if comments|length > 0 %}
 				{% for comment in comments %}
 
 					<li>
-						<span class="comment_author">{{ comment.author.username }} lvl{{ comment.author.profile.level }}</span>
-						<span class="comment_date">{{ comment.date|date("d F, Y H:i") }}</span>
-						<span class="comment_content">{{ comment.content }}</span>
+						<p class="comment-header">
+							{{ comment.author.username }} lvl{{ comment.author.profile.level }}
+							{{ comment.date|date("d F, Y H:i") }}
+						</p>
+						<p class="comment-content">
+							{{ comment.content }}
+						</p>
 					</li>
 				{% endfor %}
 			{% endif %}

@@ -22,7 +22,7 @@ class MikroblogController extends Controller
 	    $path = '/mikroblog';
 
 	    $form = $this->createFormBuilder()
-		    ->add('content', 'textarea')
+		    ->add('content', 'textarea', array('label' => false))
 		    ->add('save', 'submit', array('label' => 'Add entry'))
 		    ->getForm();
 

@@ -13,6 +13,7 @@
 	{% if signedIn == false %}
 			<a href="{{ path('showSignIn') }}"><img src="{{ asset('bundles/zacja/images/signin-icon.png') }}"></a>
 			<a href="{{ path('showSignUp') }}"><img src="{{ asset('bundles/zacja/images/signup-icon.png') }}"></a>
+			<a href="{{ path('mikroblog') }}"> <img src="{{ asset('bundles/zacja/images/micro-icon.png') }}"> </a>
 	{% else %}
 		<a href="{{ path('zacja_account_signout') }}"><img src="{{ asset('bundles/zacja/images/signout-icon.png') }}"></a>
 

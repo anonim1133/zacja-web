@@ -3,7 +3,7 @@
 {% block title %}ZacjaBundle:Authenticate:showSignIn{% endblock %}
 
 {% block body %}
-<h1>Welcome to the Authenticate:showSignIn page</h1>
+	{{ render(controller('ZacjaBundle:Common:header')) }}
 
 
 	{% if error is defined %}

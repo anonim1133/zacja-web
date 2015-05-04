@@ -3,7 +3,11 @@
 {% block title %}ZacjaBundle:Authenticate:showSignUp{% endblock %}
 
 {% block body %}
-<h1>Welcome to the Authenticate:showSignUp page</h1>
+	{{ render(controller('ZacjaBundle:Common:header')) }}
+
+	{% if error is defined %}
+		<div class="error">{{ error }}</div>
+	{% endif %}
 
 	{{ form(form) }}
 
