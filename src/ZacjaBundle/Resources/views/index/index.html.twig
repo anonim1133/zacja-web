@@ -6,13 +6,18 @@
 
 	{{ render(controller('ZacjaBundle:Common:header')) }}
 
+<div id="index">
 	{% if signed_in and friends_trainings is not null %}
 		<div id="last_friends_trainings_list">
 			<ul>
+				<h3> Friends last workouts </h3>
 				{% for training in friends_trainings %}
 					<li>
-						<a href="/training/type/{{ training.type }}">{{ training.type }}</a> by
-						<a href="/user/{{ training.user.username }}">{{ training.user.username }}</a>
+						<p>
+							<a href="/training/type/{{ training.type }}">{{ training.type }}</a> by
+							<a href="/user/{{ training.user.username }}">{{ training.user.username }}</a>
+						</p>
+						<p class="points"> {{ training.score }} points</p>
 						<p><a href="/training/{{ training.id }}">{{ training.date|date("d F, Y H:i") }}</a></p>
 					</li>
 				{% endfor %}
@@ -23,6 +28,7 @@
 	{% if signed_in and friends_conquers is not null %}
 		<div id="last_friends_conquers_list">
 			<ul>
+				<h3> Friends last conquers </h3>
 				{% for conquer in friends_conquers %}
 					<li>
 						<a href="/user/conquers/{{ conquer.user.username }}"> {{ conquer.score }} points </a> by
@@ -36,10 +42,14 @@
 
 	<div id="last_trainings_list">
 		<ul>
+			<h3> Last trainings </h3>
 			{% for training in trainings %}
 				<li>
-					<a href="/training/type/{{ training.type }}">{{ training.type }}</a> by
-					<a href="/user/{{ training.user_name }}">{{ training.user_name }}</a>
+					<p>
+						<a href="/training/type/{{ training.type }}">{{ training.type }}</a> by
+						<a href="/user/{{ training.user_name }}">{{ training.user_name }}</a>
+					</p>
+					<p class="points"> {{ training.score }} points</p>
 					<p><a href="/training/{{ training.id }}">{{ training.date }}</a></p>
 				</li>
 			{% endfor %}
@@ -48,6 +58,7 @@
 
 	<div id="last_conquers_list">
 		<ul>
+			<h3> Last conquers </h3>
 			{% for conquer in conquers %}
 				<li>
 					<a href="/user/conquers/{{ conquer.user_name }}"> {{ conquer.count }} conquers with {{ conquer.score }} points </a> by
@@ -56,5 +67,5 @@
 			{% endfor %}
 		</ul>
 	</div>
-
+</div>
 {% endblock %}

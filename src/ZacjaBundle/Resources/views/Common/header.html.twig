@@ -1,28 +1,35 @@
-	<header>
+<header>
 
-	<h1>Welcome {% if username is defined %} {{ username }} {%  endif %}!</h1>
+	<span id="welcome">
+		<h3>Welcome {% if username is defined %} {{ username }} {%  endif %}!</h3>
 
-	{% if user is not null %}
-		<p class="level">Level {{ user.profile.level }} with {{ user.profile.score }}/{{ user.profile.getPointsForNextLevel() }} points. {{ user.profile.getPointsToNextLevel() }} to next level.</p>
-	{% endif %}
+
+		{% if user is not null %}
+			<p class="level">Level {{ user.profile.level }} with {{ user.profile.score }}/{{ user.profile.getPointsForNextLevel() }} points. {{ user.profile.getPointsToNextLevel() }} to next level.</p>
+		{% endif %}
+
+	</span>
 
 	{% if signedIn == false %}
-			<a href="{{ path('showSignIn') }}">Sign In</a>
-			</br>
-			<a href="{{ path('showSignUp') }}">Sign Up</a>
+			<a href="{{ path('showSignIn') }}"><img src="{{ asset('bundles/zacja/images/signin-icon.png') }}"></a>
+			<a href="{{ path('showSignUp') }}"><img src="{{ asset('bundles/zacja/images/signup-icon.png') }}"></a>
 	{% else %}
-		<a href="{{ path('zacja_account_signout') }}">Sign Out</a>
+		<a href="{{ path('zacja_account_signout') }}"><img src="{{ asset('bundles/zacja/images/signout-icon.png') }}"></a>
+
+		<a href="{{ path('mikroblog') }}"> <img src="{{ asset('bundles/zacja/images/micro-icon.png') }}"> </a>
 
 		<ul id="notification-list">
+			<img id="notification-icon" src="{{ asset('bundles/zacja/images/notification-icon.png') }}">
 			{% for notification in user.profile.notifications.notifications %}
 				<li>
-					<span class="notification_date">{{ notification.date|date("d F, Y H:i") }}</span>
-					<span class="notification_content">{{ notification.content }}</span>
+					<span class="notification-date">{{ notification.date|date("d F, Y H:i") }}</span>
+					<span class="notification-content">{{ notification.content }}</span>
 				</li>
 			{% endfor %}
 		</ul>
 	{% endif %}
 
-		<a href="{{ path('mikroblog') }}"> Mikroblog </a>
+
+
 
 </header>

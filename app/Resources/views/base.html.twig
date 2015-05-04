@@ -4,9 +4,11 @@
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
 
-	    {% stylesheets '@ZacjaBundle/Resources/public/css/*' filter='cssrewrite' %}
-	    <link rel="stylesheet" href="{{ asset_url }}" />
-	    {% endstylesheets %}
+	    {% block stylesheets %}
+		    {% stylesheets '@ZacjaBundle/Resources/public/css/*' filter='cssrewrite' %}
+		        <link rel="stylesheet" href="{{ asset_url }}" />
+		    {% endstylesheets %}
+	    {% endblock %}
 
 	    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
 

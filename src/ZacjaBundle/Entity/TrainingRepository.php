@@ -17,6 +17,7 @@ class TrainingRepository extends EntityRepository {
 			foreach($trainings_temp as $training){
 				$trainings[$i]["id"] = $training->getId();
 				$trainings[$i]["type"] = $training->getType();
+				$trainings[$i]["score"] = $training->getScore();
 				$trainings[$i]["date"] = $training->getDate()->format('Y-m-d H:i:s');
 				$trainings[$i]["user_id"] =  $training->getUserId();
 
