@@ -165,9 +165,7 @@ class AccountController extends Controller{ //ToDo: Move database operations to 
     public function signOutAction(){
 	    $request = $this->getRequest();
 	    $session = $request->getSession();
-	    $token = new AnonymousToken("", "");
-	    $this->get('security.token_storage')->setToken($token);
-	    $session->set('_security_main',  serialize($token));
+	    $session->clear();
 
         return $this->redirect($this->generateUrl('index'), 301);
     }
