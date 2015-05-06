@@ -16,7 +16,7 @@
 					{%  if training.distance > 0 %}
 					<p class="training_distance">
 						<span class="label"> Distance </span>
-						{{ training.distance }}
+						{{ training.distance|number_format(2, '.', ' ') }} km
 					</p>
 					{% endif %}
 

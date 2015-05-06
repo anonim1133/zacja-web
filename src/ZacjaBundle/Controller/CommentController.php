@@ -16,7 +16,7 @@ class CommentController extends Controller{
 	    $username = null;
 
 	    $form = $this->createFormBuilder()
-		    ->add('content', 'textarea')
+		    ->add('content', 'textarea', array('label' => false))
 		    ->add('save', 'submit', array('label' => 'Add comment'))
 		    ->getForm();
 

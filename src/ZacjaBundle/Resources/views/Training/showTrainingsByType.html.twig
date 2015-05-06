@@ -7,7 +7,7 @@
 
 	{# ToDo: Graphic corresponding to training type #}
 
-	<div id="last_trainings_list">
+	<div id="last_trainings_list" class="separate">
 		<ul>
 			{% for training in trainings %}
 				<li>
@@ -25,7 +25,7 @@
 					{%  if training.distance > 0 %}
 						<p class="training_distance">
 							<span class="label"> Distance </span>
-							{{ training.distance }}
+							{{ training.distance|number_format(2, '.', ' ') }} km
 						</p>
 					{% endif %}
 

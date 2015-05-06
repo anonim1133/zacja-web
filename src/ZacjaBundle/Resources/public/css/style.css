@@ -5,15 +5,19 @@ body{
 
 a, a:visited{
 	color: #005C66;
+	text-decoration: none;
 }
 
 a:hover{
 	color: #001122;
 }
+
 /* Header */
 
 header a{
 	float:right;
+	height: 100%;
+	width: 256px;
 }
 
 header a#mikro{
@@ -28,6 +32,8 @@ header{
 	height:128px;
 	color: white;
 	margin-bottom: 16px;
+	display: flex;
+	font-size: larger;
 }
 
 header #welcome{
@@ -38,11 +44,11 @@ header #welcome{
 
 #welcome h3, #welcome .level{
 	margin: 0;
+	font-size: larger;
 }
 
 header a img{
-	width: 32px;
-	height: 32px;
+	height: 100%;
 }
 
 header a{
@@ -52,35 +58,34 @@ header a{
 }
 
 img#notification-icon{
-	width: 32px;
-	height: 32px;
+	height: 128px;
 	float: right;
 	padding-bottom: 256px;
-	position: relative;
-	top: -32px;
 }
 
 header ul#notification-list{
+	width: 128px;
 	background: #86D3DB;
-	width: 0px;
-	height: 0px;
+	height: 128px;
 	overflow: hidden;
 	display: inline-block;
 	float:right;
 	margin: 0;
-	padding-top: 32px;
 	list-style: none;
 }
 
 header ul#notification-list:hover{
-	width: 256px;
+	float:left;
+	width: 100%;
 	height: initial;
 	position: absolute;
 	z-index: 100;
-	right: 72px;
+	right: 0px;
+	top: 0px;
 	padding-left: 16px;
 	padding-right: 16px;
 	padding-bottom: 16px;
+	font-size: xx-large;
 }
 
 header ul#notification-list:hover img#notification-icon{
@@ -192,8 +197,7 @@ div#last_friends_trainings_list ul, div#last_trainings_list ul, div#last_friends
 }
 
 div#last_friends_trainings_list ul li, div#last_trainings_list ul li, div#last_friends_conquers_list ul li, div#last_conquers_list ul li{
-	border-bottom: 1px solid;
-	border-color: #8899AA;
+	border-bottom: 1px solid #DAEFF2;
 }
 
 div#last_friends_trainings_list ul li:last-child, div#last_trainings_list ul li:last-child, div#last_friends_conquers_list ul li:last-child, div#last_conquers_list ul li:last-child{
@@ -257,22 +261,202 @@ p.error{
 	padding-left: 32px;
 }
 
+/* Training */
+
+#training-details{
+	text-align: center;
+}
+
+p.training-type img{
+	width: 33%
+}
+
+/* Training comments */
+
+#comments ul{
+	list-style: none;
+	width: 85%;
+}
+
+#comments li p.comment-header{
+	border-bottom: 1px solid #DAEFF2;
+	margin: 0px;
+}
+
+#comments li p.comment-content{
+	border-left: 1px solid #DAEFF2;
+	margin: 0px;
+	padding-top: 16px;
+	padding-bottom: 16px;
+	padding-left: 32px;
+}
+
+#comments textarea{
+	width: 75%;
+	margin: auto;
+	display: block;
+	min-height: 128px;
+	background: #DAEFF2;
+	border: 2px solid #ADD3D8;
+	font-size: large;
+	color: #3D4B4C;
+}
+
+#comments button{
+	margin: auto;
+	display: block;
+	background: #DAEFF2;
+	border: 2px solid #ADD3D8;
+	font-size: large;
+	color: #3D4B4C;
+}
+
+/* user conquers */
+
+#last_conquers_list.separate ul li{
+	display: flex;
+	border-bottom: none;
+	border-right: 1px solid #DAEFF2;
+	padding-left: 16px;
+	padding-right: 16px;
+}
+
+#last_conquers_list.separate{
+	width: 100%;
+	margin: 0;
+	padding: 16px;
+
+}
+
+#last_conquers_list.separate ul{
+	display: flex;
+	flex-wrap: wrap;
+}
+
+/* User trainings by type list */
+
+#last_trainings_list.separate ul li{
+	border-bottom: none;
+	border-right: 1px solid #DAEFF2;
+	padding-left: 16px;
+	padding-right: 16px;
+	width: 128px;
+}
+
+#last_trainings_list.separate{
+	width: 100%;
+	margin: 0;
+	padding: 16px;
+
+}
+
+#last_trainings_list.separate ul{
+	display: flex;
+	flex-wrap: wrap;
+	width: 80%;
+	margin: auto;
+}
+
+/* User trainings list */
+
+.separate #last_trainings_list ul li{
+	border-bottom: none;
+	border-right: 1px solid #DAEFF2;
+	padding-left: 16px;
+	padding-right: 16px;
+	width: 128px;
+}
+
+.separate #last_trainings_list{
+	width: 100%;
+	margin: 0;
+	padding: 16px;
+
+}
+
+.separate #last_trainings_list ul{
+	display: flex;
+	flex-wrap: wrap;
+	width: 80%;
+	margin: auto;
+}
+
 @media all and (min-width: 1200px) {
-	 div#last_friends_trainings_list, div#last_trainings_list, div#last_friends_conquers_list, div#last_conquers_list{
+	div#last_friends_trainings_list, div#last_trainings_list, div#last_friends_conquers_list, div#last_conquers_list{
 		display: inline-flex;
-		 width: 256px;
+		width: 256px;
 	}
 	div#index div{
 		width:256px;
 	}
 
-    header{
-	    height: 32px;
-    }
+	header{
+		height: 32px;
+		display: block;
+	}
 
-    div#index{
-	    display: flex;
-	    margin: auto;
-	    padding-bottom: 32px;
-    }
+	header a{
+		width: 32px;
+	}
+
+	div#index{
+		display: flex;
+		margin: auto;
+		padding-bottom: 32px;
+	}
+
+    /* header */
+	img#notification-icon{
+		width: 32px;
+		height: 32px;
+		float: right;
+		padding-bottom: 256px;
+		position: relative;
+		top: -32px;
+	}
+
+	header ul#notification-list{
+		background: #86D3DB;
+		width: 0px;
+		height: 0px;
+		overflow: hidden;
+		display: inline-block;
+		float:right;
+		margin: 0;
+		padding-top: 32px;
+		list-style: none;
+	}
+
+	header ul#notification-list:hover{
+		width: 256px;
+		height: initial;
+		position: absolute;
+		z-index: 100;
+		right: 104px;
+		padding-left: 16px;
+		padding-right: 16px;
+		padding-bottom: 16px;
+		font-size: initial;
+	}
+
+	header ul#notification-list:hover img#notification-icon{
+		left: 16px;
+	}
+
+	ul#notification-list li span.notification-date{
+		border-bottom: 1px solid;
+		border-color: #f5f5f5;
+		display: block;
+		border-radius: 20px;
+		padding-top: 16px;
+	}
+
+	ul#notification-list li span.notification-content{
+		text-align: left;
+	}
+
+	ul#notification-list:hover #notification-icon{
+		position: relative;
+		top: -24px;
+	}
 }

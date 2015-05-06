@@ -4,7 +4,8 @@
 
 {% block body %}
 	{{ render(controller('ZacjaBundle:Common:header')) }}
-
+<div class="separate">
 	{{ render(controller('ZacjaBundle:User:getUserTrainings', {'user': user})) }}
+</div>
 
 {% endblock %}

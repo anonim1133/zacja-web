@@ -15,13 +15,25 @@
 	<div id="trainingChartContainer" style="height: 300px; width: 100%;"></div>
 	<script> gpx = '{{ gpx|raw }}'; </script>
 {% endif %}
-
+<div id="training-details">
 	<p class="training_user">
 		<a href="/user/{{ training.user.username }}">{{ training.user.username }}</a>
 	</p>
 
-	<p class="training_type">
-		<a href="/user/trainings/{{ training.user.username }}/{{ training.type }}">{{ training.type }}</a>
+	<p class="training-type">
+		<a href="/user/trainings/{{ training.user.username }}/{{ training.type }}">
+			{% if training.type == 'Biking' %}
+				<img src="{{ asset('bundles/zacja/images/biking.png') }}" />
+			{% elseif training.type == 'Running' %}
+				<img src="{{ asset('bundles/zacja/images/running.png') }}" />
+			{% elseif training.type == 'Walking' %}
+				<img src="{{ asset('bundles/zacja/images/walking.png') }}" />
+			{% elseif training.type == 'Jumping' %}
+				<img src="{{ asset('bundles/zacja/images/jumping.png') }}" />
+			{% elseif training.type == 'Squats' %}
+				<img src="{{ asset('bundles/zacja/images/squats.png') }}" />
+			{% endif %}
+		</a>
 	</p>
 	<p class="training_date">
 		<a href="/training/{{ training.id }}">{{ training.date|date("d F, Y H:i") }}</a>
@@ -34,7 +46,7 @@
 	{%  if training.distance > 0 %}
 		<p class="training_distance">
 			<span class="label"> Distance </span>
-			{{ training.distance|number_format(2, '.', ' ') }}
+			{{ training.distance|number_format(2, '.', ' ') }} km
 		</p>
 	{% endif %}
 
@@ -56,35 +68,35 @@
 	</p>
 	<p class="training_speed_max">
 		<span class="label"> Speed Max </span>
-		{{ training.speedMax|number_format(2, '.', ' ') }}
+		{{ training.speedMax|number_format(2, '.', ' ') }} km/h
 	</p>
 	<p class="training_speed_avg">
 		<span class="label"> Speed AVG </span>
-		{{ training.speedAvg|number_format(2, '.', ' ') }}
+		{{ training.speedAvg|number_format(2, '.', ' ') }} km/h
 	</p>
 	<p class="training_tempo_min">
 		<span class="label"> Tempo min </span>
-		{{ training.tempoMin|number_format(2, '.', ' ') }}
+		{{ training.tempoMin|number_format(2, '.', ' ') }} min/km
 	</p>
 	<p class="training_tempo_avg">
 		<span class="label"> Tempo AVG </span>
-		{{ training.tempoAvg|number_format(2, '.', ' ') }}
+		{{ training.tempoAvg|number_format(2, '.', ' ') }} min/km
 	</p>
 	<p class="training_altitude_min">
 		<span class="label"> Latitude min</span>
-		{{ training.altitudeMin }}
+		{{ training.altitudeMin }} m
 	</p>
 	<p class="training_altitude_max">
 		<span class="label"> Latitude max </span>
-		{{ training.altitudeMax }}
+		{{ training.altitudeMax }} m
 	</p>
 	<p class="training_altitude_up">
 		<span class="label"> Altitude upwards </span>
-		{{ training.altitudeUpward }}
+		{{ training.altitudeUpward }} m
 	</p>
 	<p class="training_altitude_down">
 		<span class="label"> Altitude downwards </span>
-		{{ training.altitudeDownward }}
+		{{ training.altitudeDownward }} m
 	</p>
 {% else %}
 	{%  if training.moves > 0 %}
@@ -113,7 +125,7 @@
 		{{ training.time }}
 	</p>
 {% endif %}
-
+</div>
 	{{ render(controller('ZacjaBundle:Comment:showComments', {'request': app.request, 'path': app.request.getPathInfo})) }}
 
 {% endblock %}
