@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityRepository;
 class TrainingRepository extends EntityRepository {
 	public function getLast($limit = 16){
 		$cacheDriver = new \Doctrine\Common\Cache\ApcCache();
+		$trainings = array();
 
 		if(!$cacheDriver->contains('last_trainings'.$limit)){
 			$em = $this->getEntityManager();
@@ -29,7 +30,8 @@ class TrainingRepository extends EntityRepository {
 				$i++;
 			}
 
-			$cacheDriver->save('last_trainings'.$limit, $trainings, 16);
+			if(isset($trainings) && is_array($trainings))
+				$cacheDriver->save('last_trainings'.$limit, $trainings, 16);
 		}else{
 			$trainings = $cacheDriver->fetch('last_trainings'.$limit);
 		}
@@ -67,6 +69,7 @@ class TrainingRepository extends EntityRepository {
 
 	public function findFriendsTrainings($username, $limit = 4){
 		$cacheDriver = new \Doctrine\Common\Cache\ApcCache();
+		$trainings = array();
 
 		if(!$cacheDriver->contains('friends_trainings_for_' . $username. '_limit_' . $limit)){
 			$em = $this->getEntityManager();
@@ -76,7 +79,9 @@ class TrainingRepository extends EntityRepository {
 			$friends->initialize();
 
 			$trainings = $em->getRepository("ZacjaBundle:Training")->findBy(array('user' => $friends->toArray()), array('date' => 'DESC'),$limit);
-			$cacheDriver->save('friends_trainings_for_' . $username. '_limit_' . $limit, $trainings, 64);
+
+			if(isset($trainings) && is_array($trainings))
+				$cacheDriver->save('friends_trainings_for_' . $username. '_limit_' . $limit, $trainings, 64);
 		}else{
 			$trainings = $cacheDriver->fetch('friends_trainings_for_' . $username. '_limit_' . $limit);
 		}

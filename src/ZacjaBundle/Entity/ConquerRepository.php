@@ -34,16 +34,7 @@ class ConquerRepository extends EntityRepository {
 
 		if(!is_null($user)){
 			$conquers = $em->getRepository("ZacjaBundle:Conquer")->findBy(array('userId' => $user->getId()), null, $limit);
-			/*
-			$qb = $em->createQueryBuilder();
-			$qb->select('c')
-				->from('ZacjaBundle\Entity\Conquer', 'c')
-				->leftJoin('e.relatedEntity', 'r')
-				->where('c.userId = ?1')
-				->setMaxResults( $limit )
-				->setParameter(1, $user->getId());
 
-			return $qb->getQuery()->getArrayResult();*/
 			return $conquers;
 		}else{
 			return array();
@@ -52,6 +43,7 @@ class ConquerRepository extends EntityRepository {
 
 	public function findFriendsConquers($username, $limit = 4){
 		$cacheDriver = new \Doctrine\Common\Cache\ApcCache();
+		$conquers = array();
 
 		if(!$cacheDriver->contains('friends_conquers_for_' . $username. '_limit_' . $limit)){
 			$em = $this->getEntityManager();
@@ -60,13 +52,14 @@ class ConquerRepository extends EntityRepository {
 			$friends = $user->getFriends();
 			$friends->initialize();
 
-			$trainings = $em->getRepository("ZacjaBundle:Conquer")->findBy(array('user' => $friends->toArray()), array('date' => 'DESC'),$limit);
-			$cacheDriver->save('friends_conquers_for_' . $username. '_limit_' . $limit, $trainings, 64);
+			$conquers = $em->getRepository("ZacjaBundle:Conquer")->findBy(array('user' => $friends->toArray()), array('date' => 'DESC'),$limit);
+			if(isset($conquers) && is_array($conquers))
+				$cacheDriver->save('friends_conquers_for_' . $username. '_limit_' . $limit, $conquers, 64);
 		}else{
-			$trainings = $cacheDriver->fetch('friends_conquers_for_' . $username. '_limit_' . $limit);
+			$conquers = $cacheDriver->fetch('friends_conquers_for_' . $username. '_limit_' . $limit);
 		}
 
-		return $trainings;
+		return $conquers;
 	}
 
 	public  function getCount($uid){
