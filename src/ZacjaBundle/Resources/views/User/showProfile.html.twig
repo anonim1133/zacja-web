@@ -1,6 +1,6 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}ZacjaBundle:User:showProfile{% endblock %}
+{% block title %} - {{ user.username }} profile{% endblock %}
 
 {% block body %}
 	{{ render(controller('ZacjaBundle:Common:header')) }}
