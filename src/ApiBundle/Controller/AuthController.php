@@ -9,6 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use ZacjaBundle\Entity\User;
+use ZacjaBundle\Entity\Profile;
+use ZacjaBundle\Entity\Notification;
 
 
 class AuthController extends Controller{
@@ -92,30 +94,43 @@ class AuthController extends Controller{
             $roles = 0;
             $registrationDate = new \DateTime('now');
 
-            $user = new User();
-            $user->setUsername($username);
-            $user->setPassword($password);
-            $user->setEmail($email);
-            $user->setSalt($salt);
-            $user->setIsActive($isActive);
-            $user->setRoles($roles);
-            $user->setRegistrationDate($registrationDate);
+	        $duplicate = $this->getDoctrine()->getRepository("ZacjaBundle:User")->findOneBy(array('username' => $username));
 
-            $em->persist($user);
-            $em->flush();
+	        if(is_null($duplicate)){
+		        $user = new User();
+		        $user->setUsername($username);
+		        $user->setPassword($password);
+		        $user->setEmail($email);
+		        $user->setSalt($salt);
+		        $user->setIsActive($isActive);
+		        $user->setRoles($roles);
+		        $user->setRegistrationDate($registrationDate);
 
-            $response->headers->set('Content-Type', 'text/html');
-            $response->setContent('true');
-            $response->setStatusCode(Response::HTTP_ACCEPTED);
+		        $notifications = new Notification();
 
-            return $response;
+		        $profile = new Profile();
+		        $profile->setNotifications($notifications);
+		        $profile->setScore(1023);//points for registration. Almost enough to get next level.
+		        $user->setProfile($profile);
+
+
+		        $em->persist($user);
+		        $em->flush();
+
+		        $response->headers->set('Content-Type', 'text/html');
+		        $response->setContent('true');
+		        $response->setStatusCode(Response::HTTP_ACCEPTED);
+	        }else{
+		        $response->headers->set('Content-Type', 'text/html');
+		        $response->setContent('duplicate');
+		        $response->setStatusCode(Response::HTTP_BAD_REQUEST);
+	        }
         }else{
             $response->headers->set('Content-Type', 'text/html');
             $response->setContent('false');
             $response->setStatusCode(Response::HTTP_BAD_REQUEST);
-
-            return $response;
         }
+	    return $response;
     }
 
     /**
