@@ -24,7 +24,8 @@ class ConquerController extends Controller
 	    $request = Request::createFromGlobals();
 	    $key = $request->request->get('key');//"39d275276fab1ed9491f700f3aefbce2";
 	    $conquer = json_decode($request->request->get('conquer'), 1);
-	    $date = new \DateTime($conquer['date']);
+	    $date = new \DateTime();
+	    $date->setTimestamp($conquer['date']);
 
 	    $user = $em->getRepository('ApiBundle:ApiKeys')->findOneBy(array('apikey' => $key));
 		$user = $em->getRepository('ZacjaBundle:User')->findOneById($user->getUserId());
