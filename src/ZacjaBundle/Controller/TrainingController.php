@@ -88,8 +88,6 @@ class TrainingController extends Controller
 	public function showTrainingByTypeAction($type){
 		$trainings = $this->getDoctrine()->getRepository("ZacjaBundle:Training")->findByType($type);
 
-		dump($trainings);
-
 		return $this->render(
 			'ZacjaBundle:Training:showTrainingsByType.html.twig',
 			array('trainings' => $trainings)
